@@ -1,9 +1,9 @@
 const { resolve } = require("path");
 const { defineConfig } = require("vite");
-const rootPath = "frontend/pages";
+const rootPath = "frontend";
 
 module.exports = defineConfig({
-  root: "frontend/pages",
+  root: rootPath,
   build: {
     outDir: "../public",
     rollupOptions: {
