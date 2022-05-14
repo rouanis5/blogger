@@ -1,3 +1,4 @@
+import legacy from "@vitejs/plugin-legacy";
 const { resolve } = require("path");
 const { defineConfig } = require("vite");
 const rootPath = "frontend";
@@ -12,4 +13,9 @@ module.exports = defineConfig({
       },
     },
   },
+  plugins: [
+    legacy({
+      targets: ["defaults", "not IE 11"],
+    }),
+  ],
 });
