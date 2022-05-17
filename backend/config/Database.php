@@ -7,7 +7,7 @@ $dotenev = Dotenv::createImmutable(__DIR__ . '/../');
 $getenv = $dotenev->load();
 define('GET_ENV', $getenv);
 
-require_once '../libraries/Model.php';
+require_once '../helpers/classes/Model.php';
 
 class Database extends Model
 {
