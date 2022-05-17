@@ -30,4 +30,9 @@ class Model
         }
 
     }
+
+    public function __destruct()
+    {
+        $this->connection = null;
+    }
 }
