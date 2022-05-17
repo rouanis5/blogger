@@ -25,7 +25,6 @@ class Database extends Model
         } catch (PDOException $error) {
             $this->errors[] = $error->getMessage();
         }
-        return $this->connection;
     }
 
     public function connect()
