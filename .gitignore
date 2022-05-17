@@ -27,3 +27,4 @@ dist-ssr
 .env
 vendor
 public
+.tmp
