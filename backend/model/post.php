@@ -23,7 +23,7 @@ class Post extends Model
     }
 
     //this is gonna return an object that contains a post by id with its id, text, date
-    public function getPost($id)
+    public function getPost(?int $id)
     {
         $sql = 'SELECT `id`, `post`, `date_post` FROM `' . $this->table . '` WHERE `id` = :id';
         $stmnt = $this->connection->prepare($sql);
@@ -35,8 +35,8 @@ class Post extends Model
     }
 
     //this is gonna return a boolean, if the post is deleted or not
-    //also if the post doesnt exist it will return a false 
-    public function deletePost($id)
+    //also if the post doesnt exist it will return a false
+    public function deletePost(?int $id)
     {
         $sql = 'DELETE FROM `' . $this->table . '` WHERE `id` = :id';
         $stmnt = $this->connection->prepare($sql);
@@ -51,4 +51,5 @@ class Post extends Model
             return true;
         });
     }
+
 }
