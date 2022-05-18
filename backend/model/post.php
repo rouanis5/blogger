@@ -52,4 +52,103 @@ class Post extends Model
         });
     }
 
+    public function verifyPost(?int $id)
+    {
+        $post = $this->getPost($id);
+        //return true if exists, false if it doesnt
+        return !empty($post);
+    }
+
+    public function verifyData($data)
+    {
+        $errors = [];
+        $success = false;
+        $output = (object) ['success' => &$success, 'message' => &$errors];
+
+        $text = $data['text'] ?? null;
+        $date = $data['date'] ?? null;
+
+        if (!$text) {
+            $errors[] = 'le text n\'est pas trouvé';
+        }
+
+        if (!$date) {
+            $errors[] = 'la date n\'est pas trouvée';
+        }
+
+        if (empty($errors)) {
+            $success = true;
+        }
+        return $output;
+    }
+
+    public function addPost(?array $data)
+    {
+        $errors = [];
+        $success = false;
+        $output = (object) ['success' => &$success, 'message' => &$errors];
+
+        $verify = $this->verifyData($data);
+        if (!($verify->success)) {
+            $errors = array_merge($errors, $verify->message);
+        }
+
+        if (empty($errors)) {
+            //extract from data:  text, date
+            $text = $data['text'];
+            $date = $data['date'];
+
+            $sql = 'INSERT INTO `' . $this->table . '` (`post`, `date_post`) VALUES (:text, :date)';
+            $stmnt = $this->connection->prepare($sql);
+            $stmnt->bindValue(':text', $text);
+            $stmnt->bindValue(':date', $date);
+
+            $this->tryCatchPDO($stmnt, function ($executed) use ($stmnt, &$success, &$errors) {
+                if ($stmnt->rowCount() === 0) {
+                    $errors[] = 'Insertion de l\'article est échoué';
+                } else {
+                    $success = true;
+                }
+            });
+        }
+        return $output;
+    }
+
+    public function updatePostById($id, $data)
+    {
+        $errors = [];
+        $success = false;
+        $output = (object) ['success' => &$success, 'message' => &$errors];
+
+        if (!$this->verifyPost($id)) {
+            $errors[] = 'Ce post n\'existe pas';
+            return $output;
+        }
+
+        $verify = $this->verifyData($data);
+        if (!($verify->success)) {
+            $errors = array_merge($errors, $verify->message);
+        }
+
+        if (empty($errors)) {
+            //extract from data: text, date
+            $text = $data['text'];
+            $date = $data['date'];
+
+            $sql = 'UPDATE `' . $this->table . '` SET `post` = :text, `date_post` = :date WHERE `id` = :id';
+            $stmnt = $this->connection->prepare($sql);
+            $stmnt->bindValue(':id', $id);
+            $stmnt->bindValue(':text', $text);
+            $stmnt->bindValue(':date', $date);
+
+            $this->tryCatchPDO($stmnt, function ($executed) use ($stmnt, &$success, &$errors) {
+                if ($stmnt->rowCount() === 0) {
+                    $errors[] = 'Modification de l\'article est échoué';
+                } else {
+                    $success = true;
+                }
+            });
+        }
+        return $output;
+    }
 }
