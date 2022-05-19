@@ -1,6 +1,7 @@
 <?php
 require_once realpath(__DIR__ . '/../helpers/classes/Model.php');
 require_once realpath(__DIR__ . '/../helpers/functions.php');
+require_once realpath(__DIR__ . '/../helpers/classes/Output.php');
 
 class comment extends Model
 {
@@ -17,91 +18,82 @@ class comment extends Model
     //get
     public function getCommentById(?int $id)
     {
-        $success = false;
-        $message = [];
-        $output = (object) ['message' => &$message, 'success' => &$success];
+        $out = new Output();
         $sql = 'SELECT `id`, `post_id`, `author`, `comment`, `date_comment` FROM `' . $this->table . '` WHERE `id` = :id';
         $stmnt = $this->connection->prepare($sql);
         $stmnt->bindValue(':id', $id);
 
-        $this->tryCatchPDO($stmnt, function () use ($stmnt, &$message, &$success) {
-            $res = $stmnt->fetch(PDO::FETCH_OBJ);
+        $this->tryCatchPDO($stmnt, function () use ($stmnt, &$out) {
+            $res = $stmnt->fetch(PDO::FETCH_ASSOC);
             if (empty($res)) {
-                $message[] = 'Commentaire n\'est pas trouvé';
+                $out->push('Commentaire n\'est pas trouvé');
             } else {
-                $success = true;
-                $message = $res;
+                $out->true();
+                $out->pushArray($res);
             }
         });
-        return $output;
+        return $out;
     }
 
     //get all comments for a specific post using its id;
     public function getAllComments(?int $post_id)
     {
-        $success = false;
-        $message = [];
-        $output = (object) ['message' => &$message, 'success' => &$success];
+        $out = new Output();
 
         $sql = 'SELECT `id`, `post_id`, `author`, `comment`, `date_comment` FROM `' . $this->table . '` WHERE `post_id` = :postId';
         $stmnt = $this->connection->prepare($sql);
         $stmnt->bindValue(':postId', $post_id);
 
-        $this->tryCatchPDO($stmnt, function () use ($stmnt, &$message, &$success) {
-            $res = $stmnt->fetchAll(PDO::FETCH_OBJ);
+        $this->tryCatchPDO($stmnt, function () use ($stmnt, &$out) {
+            $res = $stmnt->fetchAll(PDO::FETCH_ASSOC);
             if (empty($res)) {
-                $message[] = 'les Commentaire n\'est pas trouvé';
+                $out->push('les Commentaire n\'est pas trouvé');
             } else {
-                $success = true;
-                $message = $res;
+                $out->true();
+                $out->pushArray($res);
             }
         });
-        return $output;
-
+        return $out;
     }
 
     public function verifyData(?array $data)
     {
-        $errors = [];
-        $success = false;
-        $output = (object) ['success' => &$success, 'message' => &$errors];
+        $out = new Output();
 
         $author = $data['author'] ?? null;
         $text = $data['text'] ?? null;
         $date = $data['date'] ?? null;
 
         if (!$author) {
-            $errors[] = 'l\'auteur est invalid';
+            $out->push('l\'auteur est invalid');
         }
 
         if (!$text) {
-            $errors[] = 'le text n\'est pas trouvé';
+            $out->push('le text n\'est pas trouvé');
         }
 
         if (!$date) {
-            $errors[] = 'la date n\'est pas trouvée';
+            $out->push('la date n\'est pas trouvée');
         } else if (!validateDate($date)) { //check the date linke 'y-m-d' : '2022-12-31'
-            $errors[] = 'la date n\'est pas correct';
+            $out->push('la date n\'est pas correct');
         }
 
-        if (empty($errors)) {
-            $success = true;
+        if (empty($out->getMessages())) {
+            $out->true();
         }
-        return $output;
+        return $out;
     }
 
     public function addComment(?int $post_id, ?array $data)
     {
-        $errors = [];
-        $success = false;
-        $output = (object) ['success' => &$success, 'message' => &$errors];
+        $out = new Output();
 
         $verify = $this->verifyData($data);
-        if (!($verify->success)) {
-            $errors = array_merge($errors, $verify->message);
+        if (!($verify->getSuccess())) {
+            $out->pushArray($verify->getMessages());
         }
 
-        if (empty($errors)) {
+        if (empty($out->getMessages())) {
             //extract from data:  author, text, date
             $author = $data['author'];
             $text = $data['text'];
@@ -114,40 +106,38 @@ class comment extends Model
             $stmnt->bindValue(':text', $text);
             $stmnt->bindValue(':date', $date);
 
-            $this->tryCatchPDO($stmnt, function () use ($stmnt, &$success, &$errors) {
+            $this->tryCatchPDO($stmnt, function () use ($stmnt, &$out) {
                 if ($stmnt->rowCount() === 0) {
-                    $errors[] = 'Insertion de l\'article est échoué';
+                    $out->push('Insertion de l\'article est échoué');
                 } else {
-                    $success = true;
+                    $out->true();
                 }
             });
         }
-        return $output;
+        return $out;
     }
 
     public function verifyCommentById(?int $id)
     {
-        return $this->getCommentById($id)->success;
+        return $this->getCommentById($id)->getSuccess();
     }
 
     public function updateCommentById($id, $data)
     {
-        $errors = [];
-        $success = false;
-        $output = (object) ['success' => &$success, 'message' => &$errors];
+        $out = new Output();
 
         //check if the comment exists or not
         if (!$this->verifyCommentById($id)) {
-            $errors[] = 'Ce commentaire n\'existe plus!';
-            return $output;
+            $out->push('Ce commentaire n\'existe plus!');
+            return $out;
         }
 
         $verify = $this->verifyData($data);
-        if (!($verify->success)) {
-            $errors = array_merge($errors, $verify->message);
+        if (!($verify->getSuccess())) {
+            $out->pushArray($verify->getMessages());
         }
 
-        if (empty($errors)) {
+        if (empty($out->getMessages())) {
             //extract from data:  author, text, date
             $author = $data['author'];
             $text = $data['text'];
@@ -160,15 +150,15 @@ class comment extends Model
             $stmnt->bindValue(':text', $text);
             $stmnt->bindValue(':date', $date);
 
-            $this->tryCatchPDO($stmnt, function () use ($stmnt, &$success, &$errors) {
+            $this->tryCatchPDO($stmnt, function () use ($stmnt, &$out) {
                 if ($stmnt->rowCount() === 0) {
-                    $errors[] = 'La modification du commantaire est échoué';
+                    $out->push('La modification du commantaire est échoué');
                 } else {
-                    $success = true;
+                    $out->true();
                 }
             });
         }
-        return $output;
+        return $out;
     }
 
     public function deleteCommentById($id)

@@ -1,6 +1,7 @@
 <?php
 require_once realpath(__DIR__ . '/../helpers/classes/Model.php');
 require_once realpath(__DIR__ . '/../helpers/functions.php');
+require_once realpath(__DIR__ . '/../helpers/classes/Output.php');
 
 class Post extends Model
 {
@@ -15,46 +16,42 @@ class Post extends Model
     //this is gonna return an object that contains all posts with its id, text, date
     public function getAllPosts()
     {
-        $success = false;
-        $message = [];
-        $output = (object) ['message' => &$message, 'success' => &$success];
+        $out = new Output();
 
         $sql = 'SELECT `id`, `post`, `date_post` FROM `' . $this->table . '`';
         $stmnt = $this->connection->prepare($sql);
 
-        $this->tryCatchPDO($stmnt, function () use ($stmnt, &$message, &$success) {
-            $res = $stmnt->fetchAll(PDO::FETCH_OBJ);
+        $this->tryCatchPDO($stmnt, function () use ($stmnt, &$out) {
+            $res = $stmnt->fetchAll(PDO::FETCH_ASSOC);
             if (empty($res)) {
-                $message[] = 'l\'article n\'est pas trouvé';
+                $out->push('l\'article n\'est pas trouvé');
             } else {
-                $success = true;
-                $message = $res;
+                $out->true();
+                $out->pushArray($res);
             }
         });
-        return $output;
+        return $out;
     }
 
     //this is gonna return an object that contains a post by id with its id, text, date
     public function getPostById(?int $id)
     {
-        $success = false;
-        $message = [];
-        $output = (object) ['message' => &$message, 'success' => &$success];
+        $out = new Output();
 
         $sql = 'SELECT `id`, `post`, `date_post` FROM `' . $this->table . '` WHERE `id` = :id';
         $stmnt = $this->connection->prepare($sql);
         $stmnt->bindValue(':id', $id, PDO::PARAM_INT);
 
-        $this->tryCatchPDO($stmnt, function () use ($stmnt, &$message, &$success) {
-            $res = $stmnt->fetch(PDO::FETCH_OBJ);
+        $this->tryCatchPDO($stmnt, function () use ($stmnt, &$out) {
+            $res = $stmnt->fetch(PDO::FETCH_ASSOC);
             if (empty($res)) {
-                $message[] = 'l\'article n\'est pas trouvé';
+                $out->push('l\'article n\'est pas trouvé');
             } else {
-                $success = true;
-                $message = $res;
+                $out->true();
+                $out->pushArray($res);
             }
         });
-        return $output;
+        return $out;
     }
 
     //this is gonna return a boolean, if the post is deleted or not
@@ -83,41 +80,37 @@ class Post extends Model
 
     public function verifyData($data)
     {
-        $errors = [];
-        $success = false;
-        $output = (object) ['success' => &$success, 'message' => &$errors];
+        $out = new Output();
 
         $text = $data['text'] ?? null;
         $date = $data['date'] ?? null;
 
         if (!$text) {
-            $errors[] = 'le text n\'est pas trouvé';
+            $out->push('le text n\'est pas trouvé');
         }
 
         if (!$date) {
-            $errors[] = 'la date n\'est pas trouvée';
+            $out->push('la date n\'est pas trouvée');
         } elseif (!validateDate($date)) {
-            $errors[] = 'la date n\'est pas correct';
+            $out->push('la date n\'est pas correct');
         }
 
-        if (empty($errors)) {
-            $success = true;
+        if (empty($out->getMessages())) {
+            $out->true();
         }
-        return $output;
+        return $out;
     }
 
     public function addPost(?array $data)
     {
-        $errors = [];
-        $success = false;
-        $output = (object) ['success' => &$success, 'message' => &$errors];
+        $out = new Output();
 
         $verify = $this->verifyData($data);
-        if (!($verify->success)) {
-            $errors = array_merge($errors, $verify->message);
+        if (!($verify->getSuccess())) {
+            $out->pushArray($verify->getMessages());
         }
 
-        if (empty($errors)) {
+        if (empty($out->getMessages())) {
             //extract from data:  text, date
             $text = $data['text'];
             $date = $data['date'];
@@ -127,34 +120,32 @@ class Post extends Model
             $stmnt->bindValue(':text', $text);
             $stmnt->bindValue(':date', $date);
 
-            $this->tryCatchPDO($stmnt, function ($executed) use ($stmnt, &$success, &$errors) {
+            $this->tryCatchPDO($stmnt, function ($executed) use ($stmnt, &$out) {
                 if ($stmnt->rowCount() === 0) {
-                    $errors[] = 'Insertion de l\'article est échoué';
+                    $out->push('Insertion de l\'article est échoué');
                 } else {
-                    $success = true;
+                    $out->true();
                 }
             });
         }
-        return $output;
+        return $out;
     }
 
     public function updatePostById($id, $data)
     {
-        $errors = [];
-        $success = false;
-        $output = (object) ['success' => &$success, 'message' => &$errors];
+        $out = new Output();
 
         if (!$this->verifyPostById($id)) {
-            $errors[] = 'Ce post n\'existe pas';
-            return $output;
+            $out->push('Ce post n\'existe pas');
+            return $out;
         }
 
         $verify = $this->verifyData($data);
-        if (!($verify->success)) {
-            $errors = array_merge($errors, $verify->message);
+        if (!($verify->getSuccess())) {
+            $out->pushArray($verify->getMessages());
         }
 
-        if (empty($errors)) {
+        if (empty($out->getMessages())) {
             //extract from data: text, date
             $text = $data['text'];
             $date = $data['date'];
@@ -165,14 +156,14 @@ class Post extends Model
             $stmnt->bindValue(':text', $text);
             $stmnt->bindValue(':date', $date);
 
-            $this->tryCatchPDO($stmnt, function ($executed) use ($stmnt, &$success, &$errors) {
+            $this->tryCatchPDO($stmnt, function ($executed) use ($stmnt, &$out) {
                 if ($stmnt->rowCount() === 0) {
-                    $errors[] = 'Modification de l\'article est échoué';
+                    $out->push('Modification de l\'article est échoué');
                 } else {
-                    $success = true;
+                    $out->true();
                 }
             });
         }
-        return $output;
+        return $out;
     }
 }
