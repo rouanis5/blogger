@@ -29,7 +29,8 @@ class Post extends Model
         $stmnt = $this->connection->prepare($sql);
         $stmnt->bindValue(':id', $id, PDO::PARAM_INT);
 
-        return $this->tryCatchPDO($stmnt, function () use ($stmnt) {
+        return $this->tryCatchPDO($stmnt, function ($e) use ($stmnt) {
+            return var_dump($e);
             return $stmnt->fetchObject();
         });
     }
