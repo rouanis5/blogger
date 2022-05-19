@@ -17,7 +17,7 @@ class Post extends Model
         $sql = 'SELECT `id`, `post`, `date_post` FROM `' . $this->table . '`';
         $stmnt = $this->connection->prepare($sql);
 
-        return $this->tryCatchPDO($stmnt, function () use ($stmnt, $sql) {
+        return $this->tryCatchPDO($stmnt, function () use ($stmnt) {
             return $stmnt->fetchAll(PDO::FETCH_OBJ);
         });
     }
