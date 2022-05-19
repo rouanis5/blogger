@@ -69,5 +69,17 @@ class comment extends Model
 
     public function deleteCommentById($id)
     {
+        $sql = 'DELETE FROM `' . $this->table . '` WHERE `id` = :id';
+        $stmnt = $this->connection->prepare($sql);
+        $stmnt->bindValue(':id', $id, PDO::PARAM_INT);
+
+        return $this->tryCatchPDO($stmnt, function () use ($stmnt) {
+            //if the sql didnt runs, the rount will be 0
+            //rowCount() number of rows that were deleted
+            if ($stmnt->rowCount() === 0) {
+                return false;
+            }
+            return true;
+        });
     }
 }
