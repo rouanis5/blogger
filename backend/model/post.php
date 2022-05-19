@@ -1,5 +1,6 @@
 <?php
 require_once '../helpers/classes/Model.php';
+require_once '../helpers/functions.php';
 
 class Post extends Model
 {
@@ -14,25 +15,46 @@ class Post extends Model
     //this is gonna return an object that contains all posts with its id, text, date
     public function getAllPosts()
     {
+        $success = false;
+        $message = [];
+        $output = (object) ['message' => &$message, 'success' => &$success];
+
         $sql = 'SELECT `id`, `post`, `date_post` FROM `' . $this->table . '`';
         $stmnt = $this->connection->prepare($sql);
 
-        return $this->tryCatchPDO($stmnt, function () use ($stmnt) {
-            return $stmnt->fetchAll(PDO::FETCH_OBJ);
+        $this->tryCatchPDO($stmnt, function () use ($stmnt, &$message, &$success) {
+            $res = $stmnt->fetchAll(PDO::FETCH_OBJ);
+            if (empty($res)) {
+                $message[] = 'l\'article n\'est pas trouvé';
+            } else {
+                $success = true;
+                $message = $res;
+            }
         });
+        return $output;
     }
 
     //this is gonna return an object that contains a post by id with its id, text, date
     public function getPostById(?int $id)
     {
+        $success = false;
+        $message = [];
+        $output = (object) ['message' => &$message, 'success' => &$success];
+
         $sql = 'SELECT `id`, `post`, `date_post` FROM `' . $this->table . '` WHERE `id` = :id';
         $stmnt = $this->connection->prepare($sql);
         $stmnt->bindValue(':id', $id, PDO::PARAM_INT);
 
-        return $this->tryCatchPDO($stmnt, function ($e) use ($stmnt) {
-            return var_dump($e);
-            return $stmnt->fetchObject();
+        $this->tryCatchPDO($stmnt, function () use ($stmnt, &$message, &$success) {
+            $res = $stmnt->fetch(PDO::FETCH_OBJ);
+            if (empty($res)) {
+                $message[] = 'l\'article n\'est pas trouvé';
+            } else {
+                $success = true;
+                $message = $res;
+            }
         });
+        return $output;
     }
 
     //this is gonna return a boolean, if the post is deleted or not
@@ -55,9 +77,8 @@ class Post extends Model
 
     public function verifyPostById(?int $id)
     {
-        $post = $this->getPostById($id);
         //return true if exists, false if it doesnt
-        return !empty($post);
+        return $this->getPostById($id)->success;
     }
 
     public function verifyData($data)
@@ -75,6 +96,8 @@ class Post extends Model
 
         if (!$date) {
             $errors[] = 'la date n\'est pas trouvée';
+        } elseif (!validateDate($date)) {
+            $errors[] = 'la date n\'est pas correct';
         }
 
         if (empty($errors)) {
