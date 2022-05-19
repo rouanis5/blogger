@@ -1,5 +1,6 @@
 <?php
 require_once '../helpers/classes/Model.php';
+require_once '../helpers/functions.php';
 
 class comment extends Model
 {
@@ -59,12 +60,115 @@ class comment extends Model
 
     }
 
-    public function addComment($id, $data)
+    public function verifyData(?array $data)
     {
+        $errors = [];
+        $success = false;
+        $output = (object) ['success' => &$success, 'message' => &$errors];
+
+        $author = $data['author'] ?? null;
+        $text = $data['text'] ?? null;
+        $date = $data['date'] ?? null;
+
+        if (!$author) {
+            $errors[] = 'l\'auteur est invalid';
+        }
+
+        if (!$text) {
+            $errors[] = 'le text n\'est pas trouvé';
+        }
+
+        if (!$date) {
+            $errors[] = 'la date n\'est pas trouvée';
+        } else if (!validateDate($date)) { //check the date linke 'y-m-d' : '2022-12-31'
+            $errors[] = 'la date n\'est pas correct';
+        }
+
+        if (empty($errors)) {
+            $success = true;
+        }
+        return $output;
+    }
+
+    public function addComment(?int $post_id, ?array $data)
+    {
+        $errors = [];
+        $success = false;
+        $output = (object) ['success' => &$success, 'message' => &$errors];
+
+        $verify = $this->verifyData($data);
+        if (!($verify->success)) {
+            $errors = array_merge($errors, $verify->message);
+        }
+
+        if (empty($errors)) {
+            //extract from data:  author, text, date
+            $author = $data['author'];
+            $text = $data['text'];
+            $date = $data['date'];
+
+            $sql = 'INSERT INTO `' . $this->table . '` (`post_id`, `author`, `comment`, `date_comment`) VALUES (:postId, :author, :text, :date)';
+            $stmnt = $this->connection->prepare($sql);
+            $stmnt->bindValue(':postId', $post_id);
+            $stmnt->bindValue(':author', $author);
+            $stmnt->bindValue(':text', $text);
+            $stmnt->bindValue(':date', $date);
+
+            $this->tryCatchPDO($stmnt, function () use ($stmnt, &$success, &$errors) {
+                if ($stmnt->rowCount() === 0) {
+                    $errors[] = 'Insertion de l\'article est échoué';
+                } else {
+                    $success = true;
+                }
+            });
+        }
+        return $output;
+    }
+
+    public function verifyCommentById(?int $id)
+    {
+        return $this->getCommentById($id)->success;
     }
 
     public function updateCommentById($id, $data)
     {
+        $errors = [];
+        $success = false;
+        $output = (object) ['success' => &$success, 'message' => &$errors];
+
+        //check if the comment exists or not
+        if (!$this->verifyCommentById($id)) {
+            $errors[] = 'Ce commentaire n\'existe plus!';
+            return $output;
+        }
+
+        $verify = $this->verifyData($data);
+        if (!($verify->success)) {
+            $errors = array_merge($errors, $verify->message);
+        }
+
+        if (empty($errors)) {
+            //extract from data:  author, text, date
+            $author = $data['author'];
+            $text = $data['text'];
+            $date = $data['date'];
+
+            $sql = 'UPDATE `' . $this->table . '` SET `author` = :author, `comment` = :text, `date_comment` = :date WHERE `id` = :id';
+            $stmnt = $this->connection->prepare($sql);
+            $stmnt->bindValue(':id', $id);
+            $stmnt->bindValue(':author', $author);
+            $stmnt->bindValue(':text', $text);
+            $stmnt->bindValue(':date', $date);
+
+            $this->tryCatchPDO($stmnt, function () use ($stmnt, &$success, &$errors) {
+                if ($stmnt->rowCount() === 0) {
+                    $errors[] = 'La modification du commantaire est échoué';
+                } else {
+                    $success = true;
+                }
+            });
+        }
+        return $output;
     }
 
     public function deleteCommentById($id)
