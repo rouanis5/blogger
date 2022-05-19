@@ -1,6 +1,6 @@
 <?php
-require_once '../helpers/classes/Model.php';
-require_once '../helpers/functions.php';
+require_once realpath(__DIR__ . '/../helpers/classes/Model.php');
+require_once realpath(__DIR__ . '/../helpers/functions.php');
 
 class Post extends Model
 {
