@@ -16,7 +16,7 @@ class comment extends Model
     public $date_comment;
 
     //get
-    public function getCommentById(?int $id)
+    public function getCommentById($id)
     {
         $out = new Output();
         $sql = 'SELECT `id`, `post_id`, `author`, `comment`, `date_comment` FROM `' . $this->table . '` WHERE `id` = :id';
@@ -36,7 +36,7 @@ class comment extends Model
     }
 
     //get all comments for a specific post using its id;
-    public function getAllComments(?int $post_id)
+    public function getAllComments($post_id)
     {
         $out = new Output();
 
@@ -84,7 +84,7 @@ class comment extends Model
         return $out;
     }
 
-    public function addComment(?int $post_id, ?array $data)
+    public function addComment($post_id, ?array $data)
     {
         $out = new Output();
 
@@ -117,12 +117,12 @@ class comment extends Model
         return $out;
     }
 
-    public function verifyCommentById(?int $id)
+    public function verifyCommentById($id)
     {
         return $this->getCommentById($id)->getSuccess();
     }
 
-    public function updateCommentById($id, $data)
+    public function updateCommentById($id, ?array $data)
     {
         $out = new Output();
 
@@ -163,17 +163,21 @@ class comment extends Model
 
     public function deleteCommentById($id)
     {
+        $out = new Output();
+
         $sql = 'DELETE FROM `' . $this->table . '` WHERE `id` = :id';
         $stmnt = $this->connection->prepare($sql);
         $stmnt->bindValue(':id', $id, PDO::PARAM_INT);
 
-        return $this->tryCatchPDO($stmnt, function () use ($stmnt) {
+        $this->tryCatchPDO($stmnt, function () use ($stmnt, &$out) {
             //if the sql didnt runs, the rount will be 0
             //rowCount() number of rows that were deleted
             if ($stmnt->rowCount() === 0) {
-                return false;
+                $out->push('la supression de l\'article est échoué');
+            } else {
+                $out->true();
             }
-            return true;
         });
+        return $out;
     }
 }

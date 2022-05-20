@@ -34,7 +34,7 @@ class Post extends Model
     }
 
     //this is gonna return an object that contains a post by id with its id, text, date
-    public function getPostById(?int $id)
+    public function getPostById($id)
     {
         $out = new Output();
 
@@ -56,29 +56,33 @@ class Post extends Model
 
     //this is gonna return a boolean, if the post is deleted or not
     //also if the post doesnt exist it will return a false
-    public function deletePostById(?int $id)
+    public function deletePostById($id)
     {
+        $out = new Output();
+
         $sql = 'DELETE FROM `' . $this->table . '` WHERE `id` = :id';
         $stmnt = $this->connection->prepare($sql);
         $stmnt->bindValue(':id', $id, PDO::PARAM_INT);
 
-        return $this->tryCatchPDO($stmnt, function () use ($stmnt) {
+        $this->tryCatchPDO($stmnt, function () use ($stmnt, &$out) {
             //if the sql didnt runs, the rount will be 0
             //rowCount() number of rows that were deleted
             if ($stmnt->rowCount() === 0) {
-                return false;
+                $out->push('la supression de l\'article est échoué');
+            } else {
+                $out->true();
             }
-            return true;
         });
+        return $out;
     }
 
-    public function verifyPostById(?int $id)
+    public function verifyPostById($id)
     {
         //return true if exists, false if it doesnt
         return $this->getPostById($id)->success;
     }
 
-    public function verifyData($data)
+    public function verifyData(?array $data)
     {
         $out = new Output();
 
@@ -131,7 +135,7 @@ class Post extends Model
         return $out;
     }
 
-    public function updatePostById($id, $data)
+    public function updatePostById($id, ?array $data)
     {
         $out = new Output();
 
