@@ -14,5 +14,6 @@ class Controller
     public function __destruct()
     {
         echo json_encode($this->res);
+        exit;
     }
 }
