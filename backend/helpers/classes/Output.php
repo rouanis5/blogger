@@ -2,8 +2,8 @@
 
 class Output
 {
-    public $message = [];
     public $success = false;
+    public $message = [];
 
     public function init(?array &$message, ?bool &$success)
     {
