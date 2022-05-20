@@ -3,7 +3,7 @@ require_once realpath(__DIR__ . '/../helpers/classes/Model.php');
 require_once realpath(__DIR__ . '/../helpers/functions.php');
 require_once realpath(__DIR__ . '/../helpers/classes/Output.php');
 
-class comment extends Model
+class Comment extends Model
 {
     //table name
     private $table = 'comments';
