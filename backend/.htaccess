@@ -1,3 +1,16 @@
+#enable apache rewrite engine
 RewriteEngine On
-RewriteCond %{REQUEST_URI}  !(\.png|\.jpg|\.webp|\.gif|\.jpeg|\.zip|\.css|\.svg|\.js)$
-RewriteRule (.*) index.php [QSA,L]
+
+#set your rewrite RewriteBase
+#Edit this in your init method too if your script lives in a subfolder
+
+# RewriteBase /
+
+# Deliver the folder or file directly if it exists on the server
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Pusg every request to index.php
+
+RewriteRule (.\*) index.php [QSA,L]
