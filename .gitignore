@@ -28,3 +28,4 @@ dist-ssr
 vendor
 public
 .tmp
+.env.js
