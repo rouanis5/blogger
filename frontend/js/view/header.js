@@ -42,7 +42,7 @@ export default class Header extends View {
                     <li class="nav-item text-success d-none d-lg-flex">
                         <i class="fa-solid fa-magnifying-glass h4 my-auto px-3"></i>
                     </li>
-                    <a class="btn btn-light text-success main-btn rounded fw-bold px-4">Login</a>
+                    <a class="btn btn-light text-success main-btn rounded fw-bold px-4" href='?action=add'>Add a post</a>
                 </div>
             </div>
         </div>

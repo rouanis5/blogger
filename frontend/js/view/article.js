@@ -19,7 +19,7 @@ export default class Article extends View {
           <p class="card-text">
             <small class="text-muted">Date: ${this.date}</small>
           </p>
-          <a href="#" class="btn btn-success">Read more</a>
+          <a href="?action=post&id=${this.id}" class="btn btn-success">Read more</a>
         </div>
       </div>
     `;
