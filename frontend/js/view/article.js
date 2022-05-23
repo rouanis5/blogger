@@ -1,6 +1,6 @@
 import View from "./abstractView";
 
-export default class Artcile extends View {
+export default class Article extends View {
   constructor(id = "", desc = "", date = "") {
     super();
     this.id = id;
