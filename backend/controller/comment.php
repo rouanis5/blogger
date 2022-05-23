@@ -9,7 +9,6 @@ class CommentConroller extends Controller
 
     public function __construct()
     {
-        parent::init();
         $db = new Database();
         $this->comment = new Comment($db);
     }

@@ -1,5 +1,10 @@
 <?php
 // require realpath(__DIR__ . '/router.php');
+header('Access-Control-Allow-Origin: *');
+header('Content-Type: application/json');
+header('Access-Control-Allow-Methods: POST');
+header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');
+
 require_once realpath(__DIR__ . '/helpers/classes/Output.php');
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     $out = new Output();

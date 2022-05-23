@@ -9,7 +9,6 @@ class PostConroller extends Controller
 
     public function __construct()
     {
-        parent::init();
         $db = new Database();
         $this->post = new Post($db);
     }
