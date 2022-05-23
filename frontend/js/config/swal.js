@@ -1,6 +1,6 @@
 import Swal from "sweetalert2";
 
-function sweetAlert(message = "", type = "error", btnText = "") {
+export default function sweetAlert(message = "", type = "error", btnText = "") {
   switch (type) {
     case "success":
       return Swal.fire({
@@ -32,5 +32,3 @@ function sweetAlert(message = "", type = "error", btnText = "") {
       break;
   }
 }
-
-export { sweetAlert };

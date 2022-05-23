@@ -1,6 +1,6 @@
-import { sweetAlert } from "./swal";
+import sweetAlert from "./swal";
 
-function ajax(
+export default function ajax(
   successFunction,
   url,
   sendData = null,
@@ -23,5 +23,3 @@ function ajax(
     }
   };
 }
-
-export { ajax };
