@@ -1,9 +1,18 @@
 import Render from "./controller/render";
 import sweeetAlert from "./config/swal";
 
-window.addEventListener("load", async function () {
+//I should search about:
+// 1. defference between load & DOMContentLoaded
+// 2. defference between document & window and its events
+// 3. what is popstate exactly
+document.addEventListener("DOMContentLoaded", async function () {
   const init = new Render();
   init.init();
+  route();
+});
+
+//when you click back btn, forward .. it will run route()
+window.addEventListener("popstate", () => {
   route();
 });
 
@@ -47,7 +56,6 @@ async function route() {
     case "add":
       render.getAddPage();
       break;
-
     case "":
       await render.getArticles();
       break;
