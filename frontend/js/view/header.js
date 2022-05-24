@@ -5,7 +5,7 @@ export default class Header extends View {
     return `
     <nav class="navbar navbar-expand-lg navbar-dark bg-success sticky-top">
         <div class="container">
-            <a class="navbar-brand fw-bold d-flex align-items-center" href="#">
+            <a class="navbar-brand fw-bold d-flex align-items-center" href="/#">
                 <img class="bg-white rounded p-1 me-2" src="./images/favicon/favicon-32x32.png" alt="smile logo">
                 IMO
             </a>
@@ -23,19 +23,19 @@ export default class Header extends View {
             <div class="collapse navbar-collapse" id="collapsibleNavId">
                 <ul class="navbar-nav ms-lg-auto ms-2 mt-2 mt-lg-0 mb-lg-0 mb-2">
                     <li class="nav-item active">
-                        <a class="nav-link text-light" href="#">Home</a>
+                        <a class="nav-link text-light" href="/#">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Services</a>
+                        <a class="nav-link" href="/#">Services</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Portfolio</a>
+                        <a class="nav-link" href="/#">Portfolio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
+                        <a class="nav-link" href="/#">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
+                        <a class="nav-link" href="/#">Contact</a>
                     </li>
                 </ul>
                 <div class="d-flex">
