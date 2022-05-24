@@ -19,7 +19,7 @@ export default class Article extends View {
         <img
           class="img-thumbnail mx-auto d-block"
           src="https://picsum.photos/1000/600?random=1"
-          alt="image"
+          alt="image" style='height: 600px'
         />
         <p class="text-black mt-5 h5 fw-light lh-base">${this.desc}</p>
       </div>
