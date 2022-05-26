@@ -2,18 +2,17 @@ import sweetAlert from "../config/swal";
 import Post from "../model/post";
 
 
-export default class addArticle {
-  constructor(text, date = null) {
-    this.text = text;
-    this.date = date;
+export default class deleteArticle {
+  constructor(id) {
+    this.id = id;
   }
 
   async send() {
     var post = new Post();
-    var res = await post.add(this.text, this.date);
+    var res = await post.delete(this.id);
 
     if (res.success) {
-      sweetAlert("article added seccessfully !", "success");
+      sweetAlert("article deleted seccessfully !", "success");
     } else {
       var errors = res.message;
       var html = "";

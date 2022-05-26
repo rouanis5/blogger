@@ -1,10 +1,12 @@
 import Header from "./view/header";
 import Footer from "./view/footer";
-import displayArticle from "./controller/article";
-import displayArticles from "./controller/articles";
+import displayArticle from "./controller/fullArticle";
+import Blog from "./controller/blog";
 import AddPage from "./view/insertPage";
 import addArticle from "./controller/addArticle";
 import updatePage from "./controller/updatePage";
+import updateArticle from "./controller/updateArticle";
+import deleteArticle from "./controller/deleteArticle";
 
 export default class Render {
   //render the header, main, footer
@@ -19,7 +21,7 @@ export default class Render {
   }
 
   async getArticles() {
-    var articles = new displayArticles();
+    var articles = new Blog();
     await articles.getHtml().then((res) => {
       document.getElementById(
         "main"
@@ -44,11 +46,24 @@ export default class Render {
     var res = await data.send();
     return res;
   }
+
+  async updateArticle() {
+    var textarea = document.getElementById("textarea");
+    var data = new updateArticle(textarea.getAttribute('data-id'), textarea.value);
+    var res = await data.send();
+    return res;
+  }
+
+  async deleteArticle(id) {
+    var data = new deleteArticle(id);
+    var res = await data.send();
+    return res;
+  }
   
   async updatePage(id){
-  var data = new updatePage(id);
-  await data.getHtml().then((res) => {
-    document.getElementById("main").innerHTML = res;
-  });
+    var data = new updatePage(id);
+    await data.getHtml().then((res) => {
+      document.getElementById("main").innerHTML = res;
+    });
   }
 }

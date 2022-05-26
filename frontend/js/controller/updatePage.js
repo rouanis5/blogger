@@ -1,18 +1,18 @@
 import API_URL from "../config/env";
-import Article from "../view/articlePage";
 import View from "../helpers/abstractView";
+import AddPage from "../view/insertPage";
 import axios from "axios";
 
 const url = new URL(API_URL + "/get");
 
-export default class displayArticle extends View {
-  // html;
+export default class updatePage extends View {
   constructor(id) {
     super();
     this.id = id;
   }
 
   async getHtml() {
+    //this is a model it get the info of an article
     const params = new URLSearchParams({
       id: this.id,
       action: "post",
@@ -26,11 +26,12 @@ export default class displayArticle extends View {
     } catch (error) {
       res = { success: false, message: "axios failure" };
     }
+    
+    // -------------------------------------------------------------------------
 
     if (res.success) {
-      var el = res.message;
-      var comp = new Article(el.id, el.post, el.date_post);
-      html = comp.getHtml();
+      var page = new AddPage('Update','updateBtn', res.message.id, res.message.post);
+      html = page.getHtml();
     }
     return html;
   }

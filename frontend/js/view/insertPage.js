@@ -1,10 +1,11 @@
 import View from "../helpers/abstractView";
 
 export default class AddPage extends View {
-  constructor(btnText = '', btnId = '',textarea = ''){
+  constructor(btnText = '', btnId = '',id='', textarea = ''){
     super();
     this.btnText = btnText;
     this.btnId = btnId;
+    this.id = id;
     this.textarea = textarea;
   }
   getHtml() {
@@ -17,8 +18,9 @@ export default class AddPage extends View {
             <textarea
               class="form-control"
               id="textarea"
-              placeholder='k'
-              rows="15"> ${this.textarea}
+              rows="15"
+              data-id="${this.id}">
+              ${this.textarea}
             </textarea>
           </div>
           <div class="d-flex">

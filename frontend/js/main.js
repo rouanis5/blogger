@@ -34,6 +34,24 @@ document.addEventListener("click", async (e) => {
       navigateTo();
     }
   }
+
+  if (e.target.matches("#updateBtn")) {
+    e.preventDefault();
+    var render = new Render();
+    var res = await render.updateArticle();
+    if (res) {
+      navigateTo();
+    }
+  }
+  
+  if (e.target.matches(".delete-article-btn")) {
+    e.preventDefault();
+    var render = new Render();
+    var res = await render.deleteArticle(e.target.getAttribute("data-id"));
+    if (res) {
+      navigateTo();
+    }
+  }
 });
 
 const navigateTo = (url = "?action") => {
