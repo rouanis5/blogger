@@ -1,4 +1,4 @@
-import Render from "./controller/render";
+import Render from "./render";
 import sweeetAlert from "./config/swal";
 
 //I should search about:
