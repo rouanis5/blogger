@@ -24,9 +24,9 @@ export default class articlePage extends View {
           ${this.btns.getHtml()}
         </div>
         <img
-          class="img-thumbnail mx-auto d-block"
+          class="img-thumbnail mx-auto d-block w-10d0"
           src="https://picsum.photos/1000/600?random=1"
-          alt="image" style='height: 600px'
+          alt="image" style='min-height: 600px, max-width:1000px'
         />
         <p class="text-black mt-5 lh-base px-2">${this.desc}</p>
         <div class="d-flex">
