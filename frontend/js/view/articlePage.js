@@ -1,4 +1,4 @@
-import View from "./abstractView";
+import View from "../helpers/abstractView";
 
 export default class Article extends View {
   constructor(id = "", desc = "", date = "") {

@@ -1,6 +1,6 @@
 import API_URL from "../config/env";
 import Article from "../view/articlePage";
-import View from "../view/abstractView";
+import View from "../helpers/abstractView";
 import axios from "axios";
 
 const url = new URL(API_URL + "/get");

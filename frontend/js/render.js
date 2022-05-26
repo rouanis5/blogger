@@ -1,9 +1,10 @@
-import Header from "../view/header";
-import Footer from "../view/footer";
-import displayArticle from "./article";
-import displayArticles from "./articles";
-import AddPage from "../view/addPage";
-import addArticle from "./addArticle";
+import Header from "./view/header";
+import Footer from "./view/footer";
+import displayArticle from "./controller/article";
+import displayArticles from "./controller/articles";
+import AddPage from "./view/insertPage";
+import addArticle from "./controller/addArticle";
+import updatePage from "./controller/updatePage";
 
 export default class Render {
   //render the header, main, footer
@@ -34,13 +35,20 @@ export default class Render {
   }
 
   getAddPage() {
-    var page = new AddPage();
+    var page = new AddPage('Insert','addBtn');
     document.getElementById("main").innerHTML = page.getHtml();
   }
-
+  
   async addArticle() {
     var data = new addArticle(document.getElementById("textarea").value);
     var res = await data.send();
     return res;
+  }
+  
+  async updatePage(id){
+  var data = new updatePage(id);
+  await data.getHtml().then((res) => {
+    document.getElementById("main").innerHTML = res;
+  });
   }
 }
