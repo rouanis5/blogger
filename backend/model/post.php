@@ -86,7 +86,7 @@ class Post extends Model
     {
         $out = new Output();
 
-        $text = $data['text'] ?? null;
+        $text = trim($data['text']) ?? null;
         $date = $data['date'] ?? null;
 
         if (!$text) {
