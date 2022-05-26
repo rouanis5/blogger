@@ -29,6 +29,12 @@ export default class articlePage extends View {
           alt="image" style='height: 600px'
         />
         <p class="text-black mt-5 lh-base px-2">${this.desc}</p>
+        <div class="d-flex">
+          <a href="/#" class="btn btn-success ms-auto me-5">
+            <i class="bi bi-arrow-return-left me-2"></i>
+            Go back
+          </a>
+        </div>
       </div>
     </section>
     `;
