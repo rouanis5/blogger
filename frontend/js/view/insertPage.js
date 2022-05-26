@@ -1,6 +1,12 @@
-import View from "./abstractView";
+import View from "../helpers/abstractView";
 
 export default class AddPage extends View {
+  constructor(btnText = '', btnId = '',textarea = ''){
+    super();
+    this.btnText = btnText;
+    this.btnId = btnId;
+    this.textarea = textarea;
+  }
   getHtml() {
     return `
     <section id="addform" class="my-5">
@@ -11,11 +17,12 @@ export default class AddPage extends View {
             <textarea
               class="form-control"
               id="textarea"
-              rows="3">
+              placeholder='k'
+              rows="15"> ${this.textarea}
             </textarea>
           </div>
           <div class="d-flex">
-            <button id="addBtn" class="btn btn-success w-100">Insert</button>
+            <button id="${this.btnId}" class="btn btn-success w-100" type="submit">${this.btnText}</button>
           </div>
         </form>
       </div>
