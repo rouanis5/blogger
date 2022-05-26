@@ -19,7 +19,7 @@ window.addEventListener("popstate", () => {
 // block urls
 document.addEventListener("click", (e) => {
   //prevent clicks and route when you click a hyperlick and its children
-  if ( e.target.matches("a") || e.target.matches("a > *")) {
+  if ( e.target.matches("a")) {
     e.preventDefault();
     navigateTo(e.target.href);
   }
@@ -56,6 +56,9 @@ async function route() {
       break;
     case "add":
       render.getAddPage();
+      break;
+    case "update":
+      render.updatePage(id);
       break;
     case "":
       await render.getArticles();
