@@ -1,34 +1,21 @@
-import axios from "axios";
-import API_URL from "../config/env";
+import Model from "../helpers/model";
 
-export default class Post {
+export default class Post extends Model{
   constructor(){
+    super();
     this.action = "post";
-  }
-  async connect(url, params){
-    var res;
-    try {
-      var req = await axios.post(url, params);
-      res = req.data;
-    } catch (error) {
-      res = { success: false, message: "axios failure" };
-    }
-    return res;
   }
 
   async getAll(){
-    const url = new URL(API_URL + "/get/all");
-    const params = new URLSearchParams({
-      action: this.action,
-    });
+    const url = this.getURL("/get/all");
+    const params = this.setParams();
 
     return await this.connect(url, params);
   }
 
   async get(id) {
-    const url = new URL(API_URL + "/get");
-    const params = new URLSearchParams({
-      action: this.action,
+    const url = this.getURL("/get");
+    const params = this.setParams({
       id: id,
     });
 
@@ -40,9 +27,8 @@ export default class Post {
       date = new Date().toISOString().slice(0, 10);
     }
 
-    const url = new URL(API_URL + "/add");
-    const params = new URLSearchParams({
-      action: this.action,
+    const url = this.getURL("/add");
+    const params = this.setParams({
       text: text || "",
       date: date || "",
     });
@@ -55,9 +41,8 @@ export default class Post {
       date = new Date().toISOString().slice(0, 10);
     }
 
-    const url = new URL(API_URL + "/update");
-    const params = new URLSearchParams({
-      action: this.action,
+    const url = this.getURL("/update");
+    const params = this.setParams({
       id: id || "",
       text: text || "",
       date: date || "",
@@ -67,9 +52,8 @@ export default class Post {
   }
 
   async delete(id){
-    const url = new URL(API_URL + "/delete");
-    const params = new URLSearchParams({
-      action: this.action,
+    const url = this.getURL("/delete");
+    const params = this.setParams({
       id: id || "",
     });
 
