@@ -22,9 +22,6 @@ export default class Header extends View {
             </button>
             <div class="collapse navbar-collapse" id="collapsibleNavId">
                 <ul class="navbar-nav ms-lg-auto ms-2 mt-2 mt-lg-0 mb-lg-0 mb-2">
-                    <li class="nav-item active">
-                        <a class="nav-link text-light" href="/#">Home</a>
-                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/#">Services</a>
                     </li>
