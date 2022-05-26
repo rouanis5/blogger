@@ -1,4 +1,6 @@
 import View from "../helpers/abstractView";
+import ArticleButtons from "./ArticleButtons";
+
 
 export default class articlePage extends View {
   constructor(id = "", desc = "", date = "") {
@@ -6,6 +8,8 @@ export default class articlePage extends View {
     this.id = id;
     this.desc = desc;
     this.date = date;
+
+    this.btns = new ArticleButtons(this.id);
   }
 
   getHtml() {
@@ -17,12 +21,7 @@ export default class articlePage extends View {
         </h2>
         <h3 class="h6 text-muted text-center mt-1">Published: ${this.date}</h3>
         <div class="d-flex justify-content-center gap-1 my-4">
-          <a href="?action=update&id=${this.id}" class="btn btn-primary" title="update this article">
-            <i class="bi bi-pencil"></i>
-          </a>
-          <a href="/#" class="btn btn-danger" title="delete this article">
-            <i class="bi bi-trash3"></i>
-          </a>
+          ${this.btns.getHtml()}
         </div>
         <img
           class="img-thumbnail mx-auto d-block"
