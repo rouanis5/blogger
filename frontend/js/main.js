@@ -18,7 +18,8 @@ window.addEventListener("popstate", () => {
 
 // block urls
 document.addEventListener("click", (e) => {
-  if (e.target.matches("a")) {
+  //prevent clicks and route when you click a hyperlick and its children
+  if ( e.target.matches("a") || e.target.matches("a > *")) {
     e.preventDefault();
     navigateTo(e.target.href);
   }
