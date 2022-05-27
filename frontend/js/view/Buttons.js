@@ -9,10 +9,10 @@ export default class Buttons extends View {
 
   getHtml() {
     return `
-      <btn class="btn btn-primary update-${this.action}}-btn" data-id="${this.id}" title="update this article">
+      <btn class="btn btn-primary update-${this.action}-btn" data-id="${this.id}" title="update this article">
         <i class="bi bi-pencil"></i>
       </btn>
-      <btn class="btn btn-danger delete-${this.action}}-btn" data-id="${this.id}" title="delete this article">
+      <btn class="btn btn-danger delete-${this.action}-btn" data-id="${this.id}" title="delete this article">
         <i class="bi bi-trash3"></i>
       </btn>
     `;

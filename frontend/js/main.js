@@ -23,6 +23,12 @@ document.addEventListener("click", (e) => {
     e.preventDefault();
     navigateTo(e.target.href);
   }
+
+  if ( e.target.matches(".update-article-btn")) {
+    e.preventDefault();
+    var id = e.target.getAttribute("data-id");
+    navigateTo(`/?action=update&id=${id}`);
+  }
 });
 
 document.addEventListener("click", async (e) => {
