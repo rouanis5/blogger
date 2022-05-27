@@ -60,8 +60,8 @@ class Comment extends Model
     {
         $out = new Output();
 
-        $author = $data['author'] ?? null;
-        $text = $data['text'] ?? null;
+        $author = trim($data['author']) ?? null;
+        $text = trim($data['text']) ?? null;
         $date = $data['date'] ?? null;
 
         if (!$author) {
