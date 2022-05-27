@@ -10,6 +10,7 @@ import deleteArticle from "./controller/deleteArticle";
 import addComment from "./controller/addComment";
 import fullComments from "./controller/fullComments";
 import deleteComment from "./controller/deleteComment";
+import sweetAlert from "./config/swal";
 
 export default class Render {
   //render the header, main, footer
@@ -59,8 +60,13 @@ export default class Render {
 
   async deleteArticle(id) {
     var data = new deleteArticle(id);
-    var res = await data.send();
-    return res;
+    sweetAlert('You won\'t be able to revert this!','warning','Yes, delete it!')
+    .then(async (btn)=>{
+      if (btn.isConfirmed) {
+        var res = await data.send();
+      }
+    })
+    return res || false;
   }
   
   async updatePage(id){
@@ -84,13 +90,18 @@ export default class Render {
 
   async deleteComment(id) {
     var data = new deleteComment(id) ;
-    var res = await data.send();
-    if (res) {
-      var postId = document.getElementById("add-comment-btn").getAttribute('data-post-id');
-      var html = new fullComments(postId);
-      document.getElementById("comments").innerHTML = await html.getCommentsStyle();
-    }
-    return res;
+    sweetAlert('You won\'t be able to revert this!','warning','Yes, delete it!')
+    .then(async (btn)=>{
+      if (btn.isConfirmed) {
+        var res = await data.send();
+        if (res) {
+          var postId = document.getElementById("add-comment-btn").getAttribute('data-post-id');
+          var html = new fullComments(postId);
+          document.getElementById("comments").innerHTML = await html.getCommentsStyle();
+        }
+      }
+    })
+    return res || false;
   }
 
 }
