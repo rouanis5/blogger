@@ -44,7 +44,7 @@ switch ($action) {
     case 'comment':
         require_once realpath(__DIR__ . '/controller/comment.php');
         $c = new CommentConroller();
-        route('/getAll', function () use ($c) {
+        route('/get/all', function () use ($c) {
             $c->getAll();
         });
 
