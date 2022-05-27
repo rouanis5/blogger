@@ -1,5 +1,6 @@
 import View from "../helpers/abstractView";
 import Buttons from "./Buttons";
+import CommentsSection from "./commentsSection";
 
 export default class articlePage extends View {
   constructor(id = "", desc = "", date = "") {
@@ -9,6 +10,7 @@ export default class articlePage extends View {
     this.date = date;
 
     this.btns = new Buttons(this.id, 'article');
+    this.comments = new CommentsSection(this.id)
   }
 
   getHtml() {
@@ -36,6 +38,7 @@ export default class articlePage extends View {
         </div>
       </div>
     </section>
+    ${this.comments.getHtml()}
     `;
   }
 }
