@@ -1,6 +1,5 @@
 import View from "../helpers/abstractView";
-import ArticleButtons from "./ArticleButtons";
-
+import Buttons from "./Buttons";
 
 export default class ArticleCard extends View {
   constructor(id = "", desc = "", date = "") {
@@ -9,7 +8,7 @@ export default class ArticleCard extends View {
     this.desc = desc;
     this.date = date;
 
-    this.btns = new ArticleButtons(this.id);
+    this.btns = new Buttons(this.id, 'article');
   }
 
   getHtml() {
