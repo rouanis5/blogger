@@ -40,7 +40,7 @@ export default class comment extends Model{
     return await this.connect(url, params);
   }
 
-  async update(id, text, date = null){
+  async update(id, author, text, date = null){
     if (!date) {
       date = new Date().toISOString().slice(0, 10);
     }

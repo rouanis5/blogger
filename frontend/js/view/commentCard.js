@@ -14,7 +14,7 @@ export default class CommentCard extends View {
   getHtml() {
     //for late i want to convert the date to : 20 October, 2018
     return `
-      <div class="bg-light border border-success rounded p-3 mt-4 text-justify">
+      <div id='comment-card-${this.id}' class="bg-light border border-success rounded p-3 mt-4 text-justify">
         <div class="d-flex align-items-center gap-2">
           <img src="https://i.pravatar.cc/50" alt="" class="rounded-circle" width="40" height="40">
           <h4 class="m-0">${this.author}</h4>
