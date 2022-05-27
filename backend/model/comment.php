@@ -108,7 +108,7 @@ class Comment extends Model
 
             $this->tryCatchPDO($stmnt, function () use ($stmnt, &$out) {
                 if ($stmnt->rowCount() === 0) {
-                    $out->push('Insertion de l\'article est échoué');
+                    $out->push('Insertion de commentaire est échoué');
                 } else {
                     $out->true();
                 }
@@ -173,7 +173,7 @@ class Comment extends Model
             //if the sql didnt runs, the rount will be 0
             //rowCount() number of rows that were deleted
             if ($stmnt->rowCount() === 0) {
-                $out->push('la supression de l\'article est échoué');
+                $out->push('la supression de commentaire est échoué');
             } else {
                 $out->true();
             }
