@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `comments` (
   `date_comment` date NOT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`post_id`) REFERENCES `posts`(`id`)
-
+  ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
