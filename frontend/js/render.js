@@ -35,9 +35,10 @@ export default class Render {
 
   async getArticle(id) {
     var article = new displayArticle(id);
-    await article.getHtml().then((res) => {
-      document.getElementById("main").innerHTML = res;
-    });
+    var res = await article.getHtml();
+
+    document.getElementById("main").innerHTML = res;
+    return res ? true : false; 
   }
 
   getAddPage() {
@@ -72,9 +73,10 @@ export default class Render {
   
   async updatePage(id){
     var data = new updatePage(id);
-    await data.getHtml().then((res) => {
-      document.getElementById("main").innerHTML = res;
-    });
+    var res = await data.getHtml();
+
+    document.getElementById("main").innerHTML = res;
+    return res ? true : false; 
   }
 
   async addComment(postId) {

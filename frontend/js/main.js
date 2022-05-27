@@ -89,13 +89,17 @@ async function route() {
 
   switch (action) {
     case "post":
-      await render.getArticle(id);
+      if (! await render.getArticle(id)){
+        navigateTo('?action=404');
+      }
       break;
     case "add":
       render.getAddPage();
       break;
     case "update":
-      render.updatePage(id);
+      if (! await render.updatePage(id)){
+        navigateTo('?action=404');
+      }
       break;
     case "":
       await render.getArticles();
