@@ -58,6 +58,13 @@ document.addEventListener("click", async (e) => {
       navigateTo();
     }
   }
+
+  if (e.target.matches("#add-comment-btn")) {
+    e.preventDefault();
+    var render = new Render();
+    await render.addComment(e.target.getAttribute('data-post-id'));
+  }
+
 });
 
 const navigateTo = (url = "?action") => {

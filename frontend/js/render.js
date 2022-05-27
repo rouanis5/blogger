@@ -7,6 +7,8 @@ import addArticle from "./controller/addArticle";
 import updatePage from "./controller/updatePage";
 import updateArticle from "./controller/updateArticle";
 import deleteArticle from "./controller/deleteArticle";
+import addComment from "./controller/addComment";
+import fullComments from "./controller/fullComments";
 
 export default class Render {
   //render the header, main, footer
@@ -66,4 +68,17 @@ export default class Render {
       document.getElementById("main").innerHTML = res;
     });
   }
+
+  async addComment(postId) {
+    var textarea = document.getElementById("commentText");
+    var authorarea = document.getElementById("commentAuthor");
+
+    var data = new addComment(postId, authorarea.value, textarea.value);
+    var res = await data.send();
+    if (res) {
+      var html = new fullComments(postId);
+      document.getElementById("comments").innerHTML = await html.getCommentsStyle();
+    }
+  }
+
 }
