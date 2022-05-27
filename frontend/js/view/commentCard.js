@@ -20,7 +20,7 @@ export default class CommentCard extends View {
           <h4 class="m-0">${this.author}</h4>
         </div>
         <br>
-        <p class="text-right">${this.text}</p>
+        <p class="fw-light">${this.text}</p>
         <div class="d-flex gap-1 align-items-center justify-content-between">
           <span class="ms-2">- ${this.date}</span>
           <div>${this.btns.getHtml()}</div>
