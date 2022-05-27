@@ -1,6 +1,6 @@
 import View from "../helpers/abstractView";
 import Buttons from "./Buttons";
-import CommentsSection from "./commentsSection";
+import fullComments from "../controller/fullComments";
 
 export default class articlePage extends View {
   constructor(id = "", desc = "", date = "") {
@@ -10,10 +10,10 @@ export default class articlePage extends View {
     this.date = date;
 
     this.btns = new Buttons(this.id, 'article');
-    this.comments = new CommentsSection(this.id)
   }
 
-  getHtml() {
+  async getHtml() {
+    var section = new fullComments(this.id);
     return `
     <section id="article" class="my-5">
       <div class="container">
@@ -38,7 +38,7 @@ export default class articlePage extends View {
         </div>
       </div>
     </section>
-    ${this.comments.getHtml()}
+    ${await section.getHtml()}
     `;
   }
 }

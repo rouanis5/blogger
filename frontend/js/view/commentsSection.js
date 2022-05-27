@@ -1,9 +1,10 @@
 import View from "../helpers/abstractView";
 
 export default class CommentsSection extends View {
-  constructor(postId) {
+  constructor(postId, commentsHtml) {
     super();
     this.postId = postId;
+    this.commentsHtml = commentsHtml;
   }
 
   getHtml() {
@@ -13,7 +14,7 @@ export default class CommentsSection extends View {
             <div class="row">
                 <div class="col-sm-5 col-md-6 col-12 mb-4">
                     <h1>Comments</h1>
-                    ${'don\'t froget to add comments here!'}
+                    ${this.commentsHtml}
                 </div>
                 <div class="col offset-md-1 offset-sm-1 mt-4">
                     <form id="align-form">
