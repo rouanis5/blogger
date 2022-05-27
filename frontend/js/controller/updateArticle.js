@@ -1,5 +1,5 @@
-import sweetAlert from "../config/swal";
 import Post from "../model/post";
+import objectAlert from "../helpers/functions";
 
 
 export default class updateArticle {
@@ -13,16 +13,7 @@ export default class updateArticle {
     var post = new Post();
     var res = await post.update(this.id, this.text, this.date);
 
-    if (res.success) {
-      sweetAlert("article updated seccessfully !", "success");
-    } else {
-      var errors = res.message;
-      var html = "";
-      errors.forEach((error) => {
-        html += `<div class="alert alert-danger" role="alert">${error}</div>`;
-      });
-      sweetAlert(html);
-    }
+    objectAlert(res, "article updated seccessfully !");
 
     return res.success;
   }

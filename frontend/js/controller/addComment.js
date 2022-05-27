@@ -1,5 +1,5 @@
-import sweetAlert from "../config/swal";
 import comment from "../model/comment";
+import objectAlert from "../helpers/functions";
 
 
 export default class addComment {
@@ -13,17 +13,7 @@ export default class addComment {
   async send() {
     var c = new comment();
     var res = await c.add(this.postId,this.author,this.text, this.date);
-
-    if (res.success) {
-      sweetAlert("comment added seccessfully !", "success");
-    } else {
-      var errors = res.message;
-      var html = "";
-      errors.forEach((error) => {
-        html += `<div class="alert alert-danger" role="alert">${error}</div>`;
-      });
-      sweetAlert(html);
-    }
+    objectAlert(res, "comment added seccessfully !");
 
     return res.success;
   }

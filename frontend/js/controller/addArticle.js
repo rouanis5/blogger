@@ -1,4 +1,4 @@
-import sweetAlert from "../config/swal";
+import objectAlert from "../helpers/functions";
 import Post from "../model/post";
 
 
@@ -11,17 +11,7 @@ export default class addArticle {
   async send() {
     var post = new Post();
     var res = await post.add(this.text, this.date);
-
-    if (res.success) {
-      sweetAlert("article added seccessfully !", "success");
-    } else {
-      var errors = res.message;
-      var html = "";
-      errors.forEach((error) => {
-        html += `<div class="alert alert-danger" role="alert">${error}</div>`;
-      });
-      sweetAlert(html);
-    }
+    objectAlert(res, "article added seccessfully !");
 
     return res.success;
   }

@@ -1,5 +1,5 @@
-import sweetAlert from "../config/swal";
 import comment from "../model/comment";
+import objectAlert from "../helpers/functions";
 
 
 export default class deleteComment {
@@ -10,17 +10,7 @@ export default class deleteComment {
   async send() {
     var c = new comment();
     var res = await c.delete(this.id);
-
-    if (res.success) {
-      sweetAlert("comment deleted seccessfully !", "success");
-    } else {
-      var errors = res.message;
-      var html = "";
-      errors.forEach((error) => {
-        html += `<div class="alert alert-danger" role="alert">${error}</div>`;
-      });
-      sweetAlert(html);
-    }
+    objectAlert(res, "comment deleted seccessfully !",);
 
     return res.success;
   }
