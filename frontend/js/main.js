@@ -65,6 +65,12 @@ document.addEventListener("click", async (e) => {
     await render.addComment(e.target.getAttribute('data-post-id'));
   }
 
+  if (e.target.matches(".delete-comment-btn")) {
+    e.preventDefault();
+    var render = new Render();
+    await render.deleteComment(e.target.getAttribute('data-id'));
+  }
+
 });
 
 const navigateTo = (url = "?action") => {

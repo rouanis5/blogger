@@ -9,6 +9,7 @@ import updateArticle from "./controller/updateArticle";
 import deleteArticle from "./controller/deleteArticle";
 import addComment from "./controller/addComment";
 import fullComments from "./controller/fullComments";
+import deleteComment from "./controller/deleteComment";
 
 export default class Render {
   //render the header, main, footer
@@ -79,6 +80,17 @@ export default class Render {
       var html = new fullComments(postId);
       document.getElementById("comments").innerHTML = await html.getCommentsStyle();
     }
+  }
+
+  async deleteComment(id) {
+    var data = new deleteComment(id) ;
+    var res = await data.send();
+    if (res) {
+      var postId = document.getElementById("add-comment-btn").getAttribute('data-post-id');
+      var html = new fullComments(postId);
+      document.getElementById("comments").innerHTML = await html.getCommentsStyle();
+    }
+    return res;
   }
 
 }
