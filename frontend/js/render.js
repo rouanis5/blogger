@@ -85,6 +85,8 @@ export default class Render {
     if (res) {
       var html = new fullComments(postId);
       document.getElementById("comments").innerHTML = await html.getCommentsStyle();
+      textarea.value = "";
+      authorarea.value = "";
     }
   }
 
@@ -101,7 +103,5 @@ export default class Render {
         }
       }
     })
-    return res || false;
   }
-
 }

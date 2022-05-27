@@ -28,7 +28,7 @@ export default class CommentsSection extends View {
                           <input type="text" id="commentAuthor" class="form-control">
                       </div>
                       <p class="mb-3 text-secondary"><b>Note :</b> If you don't have an account, an avatar will be used to display your profile picture.</p>
-                      <button id="add-comment-btn" data-post-id="${this.postId}" class="btn btn-success" type="button">Post Comment</button>
+                      <button id="add-comment-btn" data-post-id="${this.postId}" class="btn btn-success" type="submit">Post Comment</button>
                     </form>
                 </div>
             </div>
