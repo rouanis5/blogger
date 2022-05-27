@@ -11,6 +11,7 @@ import addComment from "./controller/addComment";
 import fullComments from "./controller/fullComments";
 import deleteComment from "./controller/deleteComment";
 import sweetAlert from "./config/swal";
+import updateComment from "./controller/updateComment";
 
 export default class Render {
   //render the header, main, footer
@@ -86,8 +87,7 @@ export default class Render {
     var data = new addComment(postId, authorarea.value, textarea.value);
     var res = await data.send();
     if (res) {
-      var html = new fullComments(postId);
-      document.getElementById("comments").innerHTML = await html.getCommentsStyle();
+      this.refreshComments();
       textarea.value = "";
       authorarea.value = "";
     }
@@ -100,11 +100,37 @@ export default class Render {
       if (btn.isConfirmed) {
         var res = await data.send();
         if (res) {
-          var postId = document.getElementById("add-comment-btn").getAttribute('data-post-id');
-          var html = new fullComments(postId);
-          document.getElementById("comments").innerHTML = await html.getCommentsStyle();
+          this.refreshComments();
         }
       }
     })
+  }
+
+  async getCommentUpdateCard(id){
+    var data = new updateComment(id);
+    var res = await data.getHtml();
+
+    if (res) {
+      document.getElementById(`comment-card-${id}`).innerHTML = res;
+    }
+
+    return res ? true : false; 
+  }
+
+  async updateComment(id){
+    var author = document.getElementById(`update-comment-author-${id}`).value;
+    var text = document.getElementById(`update-comment-text-${id}`).value;
+    var data = new updateComment(id, author, text);
+    var res = await data.send();
+
+    if (res) {
+      this.refreshComments();
+    }
+  }
+
+  async refreshComments(){
+    var postId = document.getElementById("add-comment-btn").getAttribute('data-post-id');
+    var html = new fullComments(postId);
+    document.getElementById("comments").innerHTML = await html.getCommentsStyle();
   }
 }

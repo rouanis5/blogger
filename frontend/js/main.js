@@ -71,6 +71,18 @@ document.addEventListener("click", async (e) => {
     await render.deleteComment(e.target.getAttribute('data-id'));
   }
 
+  if (e.target.matches(".update-comment-btn")) {
+    e.preventDefault();
+    var render = new Render();
+    var res = render.getCommentUpdateCard(e.target.getAttribute('data-id'));
+    e.target.innerHtml = res;
+  }
+
+  if (e.target.matches("#submit-update-comment-btn")) {
+    e.preventDefault();
+    var render = new Render();
+    await render.updateComment(e.target.getAttribute('data-id'));
+  }
 });
 
 const navigateTo = (url = "?action") => {
