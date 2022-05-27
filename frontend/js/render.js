@@ -60,13 +60,14 @@ export default class Render {
 
   async deleteArticle(id) {
     var data = new deleteArticle(id);
-    sweetAlert('You won\'t be able to revert this!','warning','Yes, delete it!')
-    .then(async (btn)=>{
+    var res = false;
+    await sweetAlert('You won\'t be able to revert this!','warning','Yes, delete it!')
+    .then(async (btn) => {
       if (btn.isConfirmed) {
-        var res = await data.send();
+        res = await data.send();
       }
     })
-    return res || false;
+    return res;
   }
   
   async updatePage(id){
@@ -92,7 +93,7 @@ export default class Render {
 
   async deleteComment(id) {
     var data = new deleteComment(id) ;
-    sweetAlert('You won\'t be able to revert this!','warning','Yes, delete it!')
+    await sweetAlert('You won\'t be able to revert this!','warning','Yes, delete it!')
     .then(async (btn)=>{
       if (btn.isConfirmed) {
         var res = await data.send();
