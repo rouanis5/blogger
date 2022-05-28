@@ -1,6 +1,8 @@
 import View from "../helpers/abstractView";
 import Buttons from "./Buttons";
 
+const imgUrl = new URL('../../images/profile.jpg',import.meta.url).href
+
 export default class CommentCard extends View {
   constructor(id = "", author="", text = "", date = "") {
     super();
@@ -14,9 +16,9 @@ export default class CommentCard extends View {
   getHtml() {
     //for late i want to convert the date to : 20 October, 2018
     return `
-      <div id='comment-card-${this.id}' class="bg-light border border-success rounded p-3 mt-4 text-justify">
+      <div id='comment-card-${this.id}' class="bg-white-50 border rounded p-3 mt-4 text-justify">
         <div class="d-flex align-items-center gap-2">
-          <img src="https://i.pravatar.cc/50" alt="" class="rounded-circle" width="40" height="40">
+          <img src="${imgUrl}" alt="" class="rounded-circle" width="40" height="40">
           <h4 class="m-0">${this.author}</h4>
         </div>
         <br>
