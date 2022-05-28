@@ -1,12 +1,14 @@
 import View from "../helpers/abstractView";
 
+const imgUrl = new URL('../../images/favicon/favicon-32x32.png',import.meta.url).href
+
 export default class Header extends View {
   getHtml() {
     return `
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <div class="container">
             <a class="navbar-brand fw-bold d-flex align-items-center" href="/#">
-                <img class="bg-white rounded p-1 me-2" src="./images/favicon/favicon-32x32.png" alt="smile logo">
+                <img class="bg-white rounded p-1 me-2" src="${imgUrl}" alt="smile logo">
                 IMO
             </a>
             <button
