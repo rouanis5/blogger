@@ -31,8 +31,9 @@ export default class AddPage extends View {
             <br>1. We will publish it at the current time
             <br>2. You can edit at any time
           </p>
-          <div class="d-flex">
-            <button id="${this.btnId}" class="btn btn-success w-100" type="submit">${this.btnText}</button>
+          <div class="d-flex justify-content-end gap-2">
+            <button class="py-2 btn btn-warning" type="reset">Reset</button>
+            <button id="${this.btnId}" class="py-2 btn btn-success" type="submit">${this.btnText}</button>
           </div>
         </form>
       </div>

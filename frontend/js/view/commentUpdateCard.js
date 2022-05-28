@@ -22,8 +22,11 @@ export default class commentUpdateCard extends View {
         <textarea id="update-comment-text-${this.id}" rows="5" class="form-control">${this.text}</textarea>
       </div>
       <div class="d-flex gap-1 align-items-center justify-content-between">
-        <span class="ms-2">- Today date</span>
-        <button id="submit-update-comment-btn" data-id="${this.id}" class="btn btn-success" type="submit">Update now</button>
+        <button id="submit-update-comment-btn" data-id="${this.id}" class="btn btn-success" type="submit" title='update now!'>Update</button>
+        <div>
+          <button class="btn btn-warning" type="reset">Reset</button>
+          <button class="btn btn-danger" type="reset" title="cancel update"><i class="bi bi-x"></i></button>
+        </div>
       </div>
     </form>
     `;
