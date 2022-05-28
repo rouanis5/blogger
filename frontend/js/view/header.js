@@ -3,14 +3,14 @@ import View from "../helpers/abstractView";
 export default class Header extends View {
   getHtml() {
     return `
-    <nav class="navbar navbar-expand-lg navbar-dark bg-success sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <div class="container">
             <a class="navbar-brand fw-bold d-flex align-items-center" href="/#">
                 <img class="bg-white rounded p-1 me-2" src="./images/favicon/favicon-32x32.png" alt="smile logo">
                 IMO
             </a>
             <button
-                class="navbar-toggler d-lg-none text-success"
+                class="navbar-toggler d-lg-none text-warning"
                 type="button"
                 data-bs-toggle="collapse"
                 data-bs-target="#collapsibleNavId"
@@ -36,10 +36,10 @@ export default class Header extends View {
                     </li>
                 </ul>
                 <div class="d-flex">
-                    <li class="nav-item text-success d-none d-lg-flex">
+                    <li class="nav-item text-warning d-none d-lg-flex">
                         <i class="fa-solid fa-magnifying-glass h4 my-auto px-3"></i>
                     </li>
-                    <a class="btn btn-light text-success main-btn rounded fw-bold px-4" href='?action=add'>Add a post</a>
+                    <a class="btn btn-light text-dark main-btn rounded fw-bold px-4" href='?action=add'>Add a post</a>
                 </div>
             </div>
         </div>
