@@ -29,6 +29,14 @@ document.addEventListener("click", (e) => {
     var id = e.target.getAttribute("data-id");
     navigateTo(`/?action=update&id=${id}`);
   }
+
+  //exemple: when you click on get started btn, he will scroll you articles section
+  if ( e.target.matches(".scrollToBtn")) {
+    e.preventDefault();
+    var el = e.target.getAttribute('data-href')
+    document.querySelector(el).scrollIntoView()
+  }
+
 });
 
 document.addEventListener("click", async (e) => {

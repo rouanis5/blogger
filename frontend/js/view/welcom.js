@@ -10,7 +10,7 @@ export default class Welcom extends View {
             <div class="text-center">
                 <h1 class="h1 text-white">IDJA Mohamed Ouanis</h1>
                 <p class="h6 text-white fw-light">everyday an article about nature </p>
-                <btn class="btn main-btn btn-warning btn-lg fw-bosld rounded mt-4">Get Started</btn>
+                <btn data-href='#articles' class="scrollToBtn btn main-btn btn-warning btn-lg fw-bosld rounded mt-4">Get Started</btn>
             </div>
         </div>
     </section>
