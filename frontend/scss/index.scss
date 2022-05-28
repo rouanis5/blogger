@@ -42,3 +42,7 @@ body{
 .error{
   max-width: 500px;
 }
+
+.remove-pointer-events{
+  pointer-events: none;
+}
