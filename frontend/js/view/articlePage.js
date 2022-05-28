@@ -17,11 +17,11 @@ export default class articlePage extends View {
     return `
     <section id="article" class="my-5">
       <div class="container">
-        <h2 class="h1 text-success fw-bold text-center text-uppercase mb-3">
+        <h2 class="h1 text-warning fw-bold text-center text-uppercase mb-3">
           Article number ${this.id}
         </h2>
         <h3 class="h6 text-muted text-center mt-1">Published: ${this.date}</h3>
-      <div class="d-flex justify-content-center gap-1 my-4">
+        <div class="d-flex justify-content-center gap-1 my-4">
           ${this.btns.getHtml()}
         </div>
       </div>
