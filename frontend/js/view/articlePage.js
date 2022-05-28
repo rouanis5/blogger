@@ -21,14 +21,12 @@ export default class articlePage extends View {
           Article number ${this.id}
         </h2>
         <h3 class="h6 text-muted text-center mt-1">Published: ${this.date}</h3>
-        <div class="d-flex justify-content-center gap-1 my-4">
+      <div class="d-flex justify-content-center gap-1 my-4">
           ${this.btns.getHtml()}
         </div>
-        <img
-          class="img-thumbnail mx-auto d-block w-10d0"
-          src="https://picsum.photos/1000/600?random=1"
-          alt="image" style='min-height: 600px, max-width:1000px'
-        />
+      </div>
+      <div class="custom-img-cover custom-img-article" style="--img-src: url('https://picsum.photos/1200/300?random=1')"></div>
+      <div class="container">
         <p class="text-black mt-5 lh-base px-2">${this.desc}</p>
         <div class="d-flex">
           <a href="/#" class="btn btn-success ms-auto me-5">
