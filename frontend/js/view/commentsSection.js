@@ -11,14 +11,10 @@ export default class CommentsSection extends View {
     return `
       <section class="my-5">
         <div class="container">
-            <div class="row">
-                <div class="col-sm-5 col-md-6 col-12 mb-4">
-                    <h1>Comments</h1>
-                    <div id="comments">${this.commentsHtml}</div>
-                </div>
-                <div class="col offset-md-1 offset-sm-1 mt-4">
+            <div class="row g-5">
+                <div class="col">
                     <form id="align-form">
-                      <h4 class="mb-4">Leave a comment</h4>
+                      <h3 class="mb-4">Leave a comment</h3>
                       <div class="mb-3">
                           <label for="commentText">Message</label>
                           <textarea id="commentText" rows="5" class="form-control"></textarea>
@@ -30,6 +26,10 @@ export default class CommentsSection extends View {
                       <p class="mb-3 text-secondary"><b>Note :</b> If you don't have an account, an avatar will be used to display your profile picture.</p>
                       <button id="add-comment-btn" data-post-id="${this.postId}" class="btn btn-success" type="submit">Post Comment</button>
                     </form>
+                </div>
+                <div class="col-lg-5 col-md-6">
+                    <h4>Last Comments</h4>
+                    <div id="comments">${this.commentsHtml}</div>
                 </div>
             </div>
           </div>
