@@ -18,7 +18,7 @@ class Post extends Model
     {
         $out = new Output();
 
-        $sql = 'SELECT `id`, `post`, `date_post` FROM `' . $this->table . '`';
+        $sql = 'SELECT `id`, `post`, `date_post` FROM `' . $this->table . '` ORDER BY DATE(`date_post`) DESC';
         $stmnt = $this->connection->prepare($sql);
 
         $this->tryCatchPDO($stmnt, function () use ($stmnt, &$out) {

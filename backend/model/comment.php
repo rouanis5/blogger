@@ -40,7 +40,7 @@ class Comment extends Model
     {
         $out = new Output();
 
-        $sql = 'SELECT `id`, `post_id`, `author`, `comment`, `date_comment` FROM `' . $this->table . '` WHERE `post_id` = :postId';
+        $sql = 'SELECT `id`, `post_id`, `author`, `comment`, `date_comment` FROM `' . $this->table . '` WHERE `post_id` = :postId ORDER BY DATE(`date_comment`) DESC';
         $stmnt = $this->connection->prepare($sql);
         $stmnt->bindValue(':postId', $post_id);
 
