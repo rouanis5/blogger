@@ -19,8 +19,8 @@ export default class ArticleCard extends View {
       <div class="card">
         <img
           class="card-img-top"
-          src="https://picsum.photos/200/120?random=${random}"
-          alt="image"
+          src="https://picsum.photos/514/200?random=${random}"
+          alt="image-post-${this.id}"
           height='200px' 
         />
         <div class="card-body">
