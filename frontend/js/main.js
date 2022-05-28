@@ -124,9 +124,11 @@ async function route() {
     case "":
       await render.getArticles();
       break;
+    case "404":
+      render.getNotFoundPage();
+      break;
     default:
-      sweeetAlert("page Not found");
-      navigateTo();
+      navigateTo('?action=404');
       break;
   }
 }

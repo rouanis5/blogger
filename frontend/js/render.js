@@ -13,6 +13,7 @@ import deleteComment from "./controller/deleteComment";
 import sweetAlert from "./config/swal";
 import updateComment from "./controller/updateComment";
 import Welcom from "./view/welcom";
+import NotFoundPage from "./view/NotFoundPage";
 
 export default class Render {
   //render the header, main, footer
@@ -135,5 +136,10 @@ export default class Render {
     var postId = document.getElementById("add-comment-btn").getAttribute('data-post-id');
     var html = new fullComments(postId);
     document.getElementById("comments").innerHTML = await html.getCommentsStyle();
+  }
+
+  getNotFoundPage(){
+    var page = new NotFoundPage();
+    document.getElementById("main").innerHTML = page.getHtml();
   }
 }
