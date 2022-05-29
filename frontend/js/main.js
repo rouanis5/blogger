@@ -1,5 +1,4 @@
 import Render from "./render";
-import sweeetAlert from "./config/swal";
 
 //I should search about:
 // 1. defference between load & DOMContentLoaded
@@ -131,4 +130,10 @@ async function route() {
       navigateTo('?action=404');
       break;
   }
+
+  window.scrollTo({
+    top: 0,
+    left: 0,
+    behavior: "instant"
+  })
 }
