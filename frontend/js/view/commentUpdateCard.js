@@ -25,7 +25,7 @@ export default class commentUpdateCard extends View {
         <button id="submit-update-comment-btn" data-id="${this.id}" class="btn btn-success" type="submit" title='update now!'>Update</button>
         <div>
           <button class="btn btn-warning" type="reset">Reset</button>
-          <button class="btn btn-danger" type="reset" title="cancel update"><i class="bi bi-x"></i></button>
+          <button id="cancel-update-comment-btn" data-id="${this.id}" class="btn btn-danger" title="cancel update"><i class="bi bi-x remove-pointer-events"></i></button>
         </div>
       </div>
     </form>

@@ -14,6 +14,9 @@ import sweetAlert from "./config/swal";
 import updateComment from "./controller/updateComment";
 import Welcom from "./view/welcom";
 import NotFoundPage from "./view/NotFoundPage";
+import getComment from "./controller/getComment";
+
+const CommentCache = {};
 
 export default class Render {
   //render the header, main, footer
@@ -104,7 +107,7 @@ export default class Render {
       if (btn.isConfirmed) {
         var res = await data.send();
         if (res) {
-          this.refreshComments();
+          this.removeCommentCard(id);
         }
       }
     })
@@ -115,10 +118,22 @@ export default class Render {
     var res = await data.getHtml();
 
     if (res) {
+      //save the card in cache, if the use want to cancel the update
+      CommentCache[id] = document.getElementById(`comment-card-${id}`).innerHTML;
       document.getElementById(`comment-card-${id}`).innerHTML = res;
     }
 
     return res ? true : false; 
+  }
+
+  unsetCommentUpdateCard(id){
+    if(CommentCache[id]){
+      document.getElementById(`comment-card-${id}`).innerHTML = CommentCache[id];
+      delete CommentCache[id];  //remove it from cache
+      return true;
+    }
+    sweetAlert('can\'t reset the card');
+    return false;
   }
 
   async updateComment(id){
@@ -128,8 +143,15 @@ export default class Render {
     var res = await data.send();
 
     if (res) {
-      this.refreshComments();
+      this.removeCommentCard(id);
+      delete CommentCache[id];  //remove it from cache
+      await this.pushCommentCard(id);
     }
+  }
+
+  getNotFoundPage(){
+    var page = new NotFoundPage();
+    document.getElementById("main").innerHTML = page.getHtml();
   }
 
   async refreshComments(){
@@ -138,8 +160,13 @@ export default class Render {
     document.getElementById("comments").innerHTML = await html.getCommentsStyle();
   }
 
-  getNotFoundPage(){
-    var page = new NotFoundPage();
-    document.getElementById("main").innerHTML = page.getHtml();
+  async pushCommentCard(id){
+    var section = document.getElementById("comments");
+    var comp = new getComment(id);
+    section.innerHTML = await comp.getHtml() + section.innerHTML;
+  }
+
+  removeCommentCard(id){
+    document.getElementById(`comment-card-${id}`).remove();
   }
 }

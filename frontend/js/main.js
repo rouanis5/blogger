@@ -36,6 +36,13 @@ document.addEventListener("click", (e) => {
     document.querySelector(el).scrollIntoView()
   }
 
+  //when you cancel the update operation,then you will restore your comment
+  if ( e.target.matches("#cancel-update-comment-btn")) {
+    e.preventDefault();
+    var id = e.target.getAttribute('data-id');
+    var render = new Render();
+    render.unsetCommentUpdateCard(id);
+  }
 });
 
 document.addEventListener("click", async (e) => {
