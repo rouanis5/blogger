@@ -48,6 +48,10 @@ switch ($action) {
             $c->getAll();
         });
 
+        route('/get/last', function () use ($c) {
+            $c->getLast();
+        });
+
         route('/get', function () use ($c) {
             $c->get();
         });

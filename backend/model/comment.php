@@ -35,6 +35,25 @@ class Comment extends Model
         return $out;
     }
 
+    public function getLastComment($post_id){
+        $out = new Output();
+    
+        $sql = 'SELECT `id`, `post_id`, `author`, `comment`, `date_comment` FROM `' . $this->table . '` WHERE `post_id` = :postId ORDER BY IF (`id` = MAX(`id`) OVER (), 0, 1)';
+        $stmnt = $this->connection->prepare($sql);
+        $stmnt->bindValue(':postId', $post_id);
+    
+        $this->tryCatchPDO($stmnt, function () use ($stmnt, &$out) {
+            $res = $stmnt->fetch(PDO::FETCH_ASSOC);
+            if (empty($res)) {
+                $out->push('le Commentaire n\'est pas trouvé');
+            } else {
+                $out->true();
+                $out->pushArray($res);
+            }
+        });
+        return $out;
+    }
+
     //get all comments for a specific post using its id;
     public function getAllComments($post_id)
     {

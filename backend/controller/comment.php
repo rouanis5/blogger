@@ -25,6 +25,12 @@ class CommentConroller extends Controller
         $this->res = $this->comment->getCommentById($id);
     }
 
+    public function getLast()
+    {
+        $post_id = $_POST['post_id'] ?? null;
+        $this->res = $this->comment->getLastComment($post_id);
+    }
+
     public function add()
     {
         $post_id = $_POST['post_id'] ?? null;
