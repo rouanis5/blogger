@@ -14,6 +14,7 @@ import sweetAlert from "./config/swal";
 import updateComment from "./controller/updateComment";
 import NotFoundPage from "./view/NotFoundPage";
 import getComment from "./controller/getComment";
+import getLastComment from "./controller/getLastComment";
 
 const CommentCache = {};
 
@@ -87,7 +88,7 @@ export default class Render {
     var data = new addComment(postId, authorarea.value, textarea.value);
     var res = await data.send();
     if (res) {
-      this.refreshComments();
+      this.pushCommentCard(postId, true);
       textarea.value = "";
       authorarea.value = "";
     }
@@ -147,15 +148,9 @@ export default class Render {
     document.getElementById("main").innerHTML = page.getHtml();
   }
 
-  async refreshComments(){
-    var postId = document.getElementById("add-comment-btn").getAttribute('data-post-id');
-    var html = new fullComments(postId);
-    document.getElementById("comments").innerHTML = await html.getCommentsStyle();
-  }
-
-  async pushCommentCard(id){
+  async pushCommentCard(id , isPostId = false){
     var section = document.getElementById("comments");
-    var comp = new getComment(id);
+    var comp = isPostId ? new getLastComment(id) : new getComment(id);
     section.innerHTML = await comp.getHtml() + section.innerHTML;
   }
 

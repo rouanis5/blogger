@@ -24,6 +24,15 @@ export default class comment extends Model{
     return await this.connect(url, params);
   }
 
+  async getLast(post_id){
+    const url = this.getURL("/get/last");
+    const params = this.setParams({
+      post_id: post_id || ""
+    });
+
+    return await this.connect(url, params);
+  }
+
   async add(post_id, author, text, date = null){
     if (!date) {
       date = new Date().toISOString().slice(0, 10);
