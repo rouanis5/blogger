@@ -45,7 +45,7 @@ class Comment extends Model
         $this->tryCatchPDO($stmnt, function () use ($stmnt, &$out) {
             $res = $stmnt->fetch(PDO::FETCH_ASSOC);
             if (empty($res)) {
-                $out->push('le Commentaire n\'est pas trouvé');
+                $out->push('Comment not found');
             } else {
                 $out->true();
                 $out->pushArray($res);
@@ -66,7 +66,7 @@ class Comment extends Model
         $this->tryCatchPDO($stmnt, function () use ($stmnt, &$out) {
             $res = $stmnt->fetchAll(PDO::FETCH_ASSOC);
             if (empty($res)) {
-                $out->push('les Commentaire n\'est pas trouvé');
+                $out->push('Comments not found');
             } else {
                 $out->true();
                 $out->pushArray($res);
@@ -84,17 +84,17 @@ class Comment extends Model
         $date = $data['date'] ?? null;
 
         if (!$author) {
-            $out->push('l\'auteur est invalid');
+            $out->push('Author\'s name is invalid');
         }
 
         if (!$text) {
-            $out->push('le text n\'est pas trouvé');
+            $out->push('text is invalid');
         }
 
         if (!$date) {
-            $out->push('la date n\'est pas trouvée');
+            $out->push('Date not found');
         } else if (!validateDate($date)) { //check the date linke 'y-m-d' : '2022-12-31'
-            $out->push('la date n\'est pas correct');
+            $out->push('Date not correct');
         }
 
         if (empty($out->getMessages())) {
@@ -127,7 +127,7 @@ class Comment extends Model
 
             $this->tryCatchPDO($stmnt, function () use ($stmnt, &$out) {
                 if ($stmnt->rowCount() === 0) {
-                    $out->push('Insertion de commentaire est échoué');
+                    $out->push('Adding comment failed');
                 } else {
                     $out->true();
                 }
@@ -147,7 +147,7 @@ class Comment extends Model
 
         //check if the comment exists or not
         if (!$this->verifyCommentById($id)) {
-            $out->push('Ce commentaire n\'existe plus!');
+            $out->push('This comment no longer exists!');
             return $out;
         }
 
@@ -171,7 +171,7 @@ class Comment extends Model
 
             $this->tryCatchPDO($stmnt, function () use ($stmnt, &$out) {
                 if ($stmnt->rowCount() === 0) {
-                    $out->push('La modification du commantaire est échoué');
+                    $out->push('Editing comment failed');
                 } else {
                     $out->true();
                 }
@@ -192,7 +192,7 @@ class Comment extends Model
             //if the sql didnt runs, the rount will be 0
             //rowCount() number of rows that were deleted
             if ($stmnt->rowCount() === 0) {
-                $out->push('la supression de commentaire est échoué');
+                $out->push('Deleting comment failed');
             } else {
                 $out->true();
             }

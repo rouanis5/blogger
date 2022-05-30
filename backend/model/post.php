@@ -24,7 +24,7 @@ class Post extends Model
         $this->tryCatchPDO($stmnt, function () use ($stmnt, &$out) {
             $res = $stmnt->fetchAll(PDO::FETCH_ASSOC);
             if (empty($res)) {
-                $out->push('l\'article n\'est pas trouvé');
+                $out->push('Article not found');
             } else {
                 $out->true();
                 $out->pushArray($res);
@@ -45,7 +45,7 @@ class Post extends Model
         $this->tryCatchPDO($stmnt, function () use ($stmnt, &$out) {
             $res = $stmnt->fetch(PDO::FETCH_ASSOC);
             if (empty($res)) {
-                $out->push('l\'article n\'est pas trouvé');
+                $out->push('Article not found');
             } else {
                 $out->true();
                 $out->pushArray($res);
@@ -68,7 +68,7 @@ class Post extends Model
             //if the sql didnt runs, the rount will be 0
             //rowCount() number of rows that were deleted
             if ($stmnt->rowCount() === 0) {
-                $out->push('la supression de l\'article est échoué');
+                $out->push('Deleting article failed');
             } else {
                 $out->true();
             }
@@ -90,13 +90,13 @@ class Post extends Model
         $date = $data['date'] ?? null;
 
         if (!$text) {
-            $out->push('le text n\'est pas trouvé');
+            $out->push('unvalid text');
         }
 
         if (!$date) {
-            $out->push('la date n\'est pas trouvée');
+            $out->push('date not found');
         } elseif (!validateDate($date)) {
-            $out->push('la date n\'est pas correct');
+            $out->push('date not correct');
         }
 
         if (empty($out->getMessages())) {
@@ -126,7 +126,7 @@ class Post extends Model
 
             $this->tryCatchPDO($stmnt, function ($executed) use ($stmnt, &$out) {
                 if ($stmnt->rowCount() === 0) {
-                    $out->push('Insertion de l\'article est échoué');
+                    $out->push('Adding article failed');
                 } else {
                     $out->true();
                 }
@@ -140,7 +140,7 @@ class Post extends Model
         $out = new Output();
 
         if (!$this->verifyPostById($id)) {
-            $out->push('Ce post n\'existe pas');
+            $out->push('This article no longer exists!');
             return $out;
         }
 
@@ -162,7 +162,7 @@ class Post extends Model
 
             $this->tryCatchPDO($stmnt, function ($executed) use ($stmnt, &$out) {
                 if ($stmnt->rowCount() === 0) {
-                    $out->push('Modification de l\'article est échoué');
+                    $out->push('Updating comment failed');
                 } else {
                     $out->true();
                 }
