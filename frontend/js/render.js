@@ -12,7 +12,6 @@ import fullComments from "./controller/fullComments";
 import deleteComment from "./controller/deleteComment";
 import sweetAlert from "./config/swal";
 import updateComment from "./controller/updateComment";
-import Welcom from "./view/welcom";
 import NotFoundPage from "./view/NotFoundPage";
 import getComment from "./controller/getComment";
 
@@ -32,13 +31,7 @@ export default class Render {
 
   async getArticles() {
     var articles = new Blog();
-    var welcom = new Welcom();
-    await articles.getHtml().then((res) => {
-      document.getElementById("main").innerHTML = `
-        ${welcom.getHtml()}
-        <div id='articles' class='my-5'><div class='container'><div class='row g-4'>${res}</div></div></div>
-      `;
-    });
+    document.getElementById("main").innerHTML = await articles.getHtml(); 
   }
 
   async getArticle(id) {
