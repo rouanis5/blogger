@@ -25,7 +25,7 @@ export default class articlePage extends View {
           ${this.btns.getHtml()}
         </div>
       </div>
-      <div class="custom-img-cover custom-img-article" style="--img-src: url('https://picsum.photos/2444/300?random=1')"></div>
+      <div class="custom-img-cover custom-img-article" style="--img-src: url('https://picsum.photos/1920/1080?random=1')"></div>
       <div class="container">
         <p class="text-black mt-5 lh-base px-2">${this.desc}</p>
         <div class="d-flex">
