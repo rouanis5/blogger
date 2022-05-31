@@ -30,8 +30,8 @@ export default class ArticleCard extends View {
             <small class="text-muted">Date: ${this.date}</small>
           </p>
           <div class="d-flex gap-1 mt-4">
-            <a href="?action=post&id=${this.id}" class="btn btn-success btn-sm me-auto">Read more</a>
             <div>${this.btns.getHtml()}</div>
+            <a href="?action=post&id=${this.id}" class="btn btn-success btn-sm ms-auto">Read more</a>
           </div>
         </div>
       </div>
