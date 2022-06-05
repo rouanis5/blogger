@@ -16,6 +16,8 @@ import NotFoundPage from "./view/NotFoundPage";
 import getComment from "./controller/getComment";
 import getLastComment from "./controller/getLastComment";
 
+import Signin from "./view/signin";
+
 const CommentCache = {};
 
 export default class Render {
@@ -156,5 +158,10 @@ export default class Render {
 
   removeCommentCard(id){
     document.getElementById(`comment-card-${id}`).remove();
+  }
+
+  getSignInPage(){
+    var page = new Signin();
+    document.getElementById("main").innerHTML = page.getHtml();
   }
 }

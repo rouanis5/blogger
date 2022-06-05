@@ -127,6 +127,9 @@ async function route() {
         navigateTo('?action=404');
       }
       break;
+    case "signin":
+      render.getSignInPage();
+      break;
     case "":
       await render.getArticles();
       break;
