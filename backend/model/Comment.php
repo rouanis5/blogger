@@ -1,6 +1,7 @@
 <?php
 namespace Model;
-use Helpers, Helpers\classes\Model, Helpers\classes\Output, PDO;
+use Helpers\classes\Model, Helpers\classes\Output, PDO;
+use Helpers\functions as func;
 
 class Comment extends Model
 {
@@ -92,8 +93,10 @@ class Comment extends Model
 
         if (!$date) {
             $out->push('Date not found');
-        } else if (!Helpers\validateDate($date)) { //check the date linke 'y-m-d' : '2022-12-31'
+        } else if (! func::validateDate($date)) { //check the date linke 'y-m-d' : '2022-12-31'
             $out->push('Date not correct');
+            // $out->push();
+            var_dump(func::validateDate($date));
         }
 
         if (empty($out->getMessages())) {

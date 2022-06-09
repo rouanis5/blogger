@@ -1,6 +1,7 @@
 <?php
 namespace Model;
-use Helpers, Helpers\classes\Model, Helpers\classes\Output, PDO;
+use Helpers\classes\Model, Helpers\classes\Output, PDO;
+use Helpers\functions as func;
 
 class Post extends Model
 {
@@ -94,7 +95,7 @@ class Post extends Model
 
         if (!$date) {
             $out->push('date not found');
-        } elseif (!Helpers\validateDate($date)) {
+        } elseif (! func::validateDate($date)) {
             $out->push('date not correct');
         }
 
