@@ -1,16 +1,15 @@
 <?php
-require realpath(__DIR__ . '/../helpers/classes/Controller.php');
-require realpath(__DIR__ . '/../config/Database.php');
-require realpath(__DIR__ . '/../model/comment.php');
+namespace Controller;
+use Model, Helpers\classes\Controller,  Config\Database;
 
-class CommentConroller extends Controller
+class Comment extends Controller
 {
     private $comment;
 
     public function __construct()
     {
         $db = new Database();
-        $this->comment = new Comment($db);
+        $this->comment = new Model\Comment($db);
     }
 
     public function getAll()

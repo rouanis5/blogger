@@ -1,7 +1,6 @@
 <?php
-require_once realpath(__DIR__ . '/../helpers/classes/Model.php');
-require_once realpath(__DIR__ . '/../helpers/functions.php');
-require_once realpath(__DIR__ . '/../helpers/classes/Output.php');
+namespace Model;
+use Helpers, Helpers\classes\Model, Helpers\classes\Output, PDO;
 
 class Post extends Model
 {
@@ -95,7 +94,7 @@ class Post extends Model
 
         if (!$date) {
             $out->push('date not found');
-        } elseif (!validateDate($date)) {
+        } elseif (!Helpers\validateDate($date)) {
             $out->push('date not correct');
         }
 

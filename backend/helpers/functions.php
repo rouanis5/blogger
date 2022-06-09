@@ -1,4 +1,7 @@
 <?php
+namespace Helpers;
+use DateTime, FFI\Exception;
+
 //the date must be like '2022-12-31'
 function validateDate($date, $format = 'Y-m-d')
 {

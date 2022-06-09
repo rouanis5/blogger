@@ -1,11 +1,12 @@
 <?php
-// require realpath(__DIR__ . '/router.php');
+require_once realpath(__DIR__ . "/vendor/autoload.php");
+use Helpers\classes\Output, Controller\Post, Controller\Comment;
+
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
-require_once realpath(__DIR__ . '/helpers/classes/Output.php');
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     $out = new Output();
     $out->push('Only POST METHOD is accepted !');
@@ -18,8 +19,7 @@ $action = $_POST['action'] ?? null;
 
 switch ($action) {
     case 'post':
-        require_once realpath(__DIR__ . '/controller/post.php');
-        $p = new PostConroller();
+        $p = new Post();
         route('/get/all', function () use ($p) {
             $p->getAll();
         });
@@ -42,8 +42,7 @@ switch ($action) {
 
         break;
     case 'comment':
-        require_once realpath(__DIR__ . '/controller/comment.php');
-        $c = new CommentConroller();
+        $c = new Comment();
         route('/get/all', function () use ($c) {
             $c->getAll();
         });
@@ -76,6 +75,7 @@ route('/404', function () {
     $out = new Output();
     $out->push('URL not valid');
     echo json_encode($out);
+    http_response_code(404);
     exit;
 });
 

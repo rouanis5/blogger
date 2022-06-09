@@ -1,7 +1,6 @@
 <?php
-require_once realpath(__DIR__ . '/../helpers/classes/Model.php');
-require_once realpath(__DIR__ . '/../helpers/functions.php');
-require_once realpath(__DIR__ . '/../helpers/classes/Output.php');
+namespace Model;
+use Helpers, Helpers\classes\Model, Helpers\classes\Output, PDO;
 
 class Comment extends Model
 {
@@ -93,7 +92,7 @@ class Comment extends Model
 
         if (!$date) {
             $out->push('Date not found');
-        } else if (!validateDate($date)) { //check the date linke 'y-m-d' : '2022-12-31'
+        } else if (!Helpers\validateDate($date)) { //check the date linke 'y-m-d' : '2022-12-31'
             $out->push('Date not correct');
         }
 

@@ -1,16 +1,15 @@
 <?php
-require realpath(__DIR__ . '/../helpers/classes/Controller.php');
-require realpath(__DIR__ . '/../config/Database.php');
-require realpath(__DIR__ . '/../model/post.php');
+namespace Controller;
+use Model, Helpers\classes\Controller,  Config\Database;
 
-class PostConroller extends Controller
+class Post extends Controller
 {
     private $post;
 
     public function __construct()
     {
         $db = new Database();
-        $this->post = new Post($db);
+        $this->post = new Model\Post($db);
     }
 
     public function getAll()

@@ -1,13 +1,12 @@
 <?php
-require realpath(__DIR__ . '/../vendor/autoload.php');
+namespace Config;
+use Helpers\classes\Model, PDO, PDOException;
 use Dotenv\Dotenv;
 
 $dotenev = Dotenv::createImmutable(__DIR__ . '/../');
 
 $getenv = $dotenev->load();
 define('GET_ENV', $getenv);
-
-require_once realpath(__DIR__ . '/../helpers/classes/Model.php');
 
 class Database extends Model
 {

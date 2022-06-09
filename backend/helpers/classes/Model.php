@@ -1,4 +1,7 @@
 <?php
+namespace Helpers\classes;
+use \PDOException;
+
 class Model
 {
     protected $connection;

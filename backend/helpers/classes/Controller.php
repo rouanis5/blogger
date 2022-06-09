@@ -1,4 +1,6 @@
 <?php
+namespace Helpers\classes;
+
 class Controller
 {
     public $res;

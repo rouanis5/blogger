@@ -1,5 +1,21 @@
 {
-  "require": {
-    "vlucas/phpdotenv": "^5.4"
-  }
+    "name": "blogger/backend",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Config\\": "./config",
+            "Model\\": "./model",
+            "Controller\\": "./controller",
+            "Helpers\\": "./helpers"
+        }
+    },
+    "authors": [
+        {
+            "name": "rouanis5",
+            "email": "ouanis42@gmail.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.4"
+    }
 }
