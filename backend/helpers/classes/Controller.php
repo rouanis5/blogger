@@ -10,6 +10,5 @@ class Controller
         if ($this->res) {
             echo json_encode($this->res);
         }
-        exit;
     }
 }
